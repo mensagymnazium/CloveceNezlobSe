@@ -65,7 +65,7 @@
 
 					HerniPlan.PosunFigurku(figurka, hod);
 
-					if (figurka.Policko.JeDomecek)
+					if (figurka.Policko is Domecek)
 					{
 						Console.WriteLine($"Figurka {figurka.OznaceniFigurky} hráče {figurka.Hrac.Jmeno} došla do cíle.");
 

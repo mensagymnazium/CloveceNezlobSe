@@ -15,7 +15,7 @@
 			policka = new();
 
 			// startovní políčko
-			policka.Add(new Policko(dovolitViceFigurek: true));
+			policka.Add(new StartovniPolicko());
 
 			// ostatní políčka
 			for (int i = 1; i < pocetPolicek - 1; i++)
@@ -24,7 +24,7 @@
 			}
 
 			// cílové políčko
-			policka.Add(new Policko(jeDomecek: true, dovolitViceFigurek: true));
+			policka.Add(new Domecek());
 		}
 
 

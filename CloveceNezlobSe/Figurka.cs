@@ -25,7 +25,7 @@ namespace CloveceNezlobSe
 
 		public bool JeVDomecku()
 		{
-			return (this.Policko != null) && (this.Policko.JeDomecek);
+			return (this.Policko != null) && (this.Policko is Domecek);
 		}
 	}
 }
