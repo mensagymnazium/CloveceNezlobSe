@@ -3,7 +3,10 @@
 	public class Hrac
 	{
 		public string Jmeno { get; private set; }
-		public List<Figurka> Figurky { get; }
+
+		private List<Figurka> figurky = new();
+		public IReadOnlyList<Figurka> Figurky => figurky.AsReadOnly();
+		
 
 		private HerniStrategie herniStrategie;
 
@@ -12,16 +15,15 @@
 			this.Jmeno = jmeno;
 			this.herniStrategie = herniStrategie;
 
-			Figurky = new();
 			for (int i = 0; i < 4; i++)
 			{
-				Figurky.Add(new Figurka(this, $"{this.Jmeno.Substring(0,1)}{(i + 1)}"));
+				figurky.Add(new Figurka(this, $"{this.Jmeno.Substring(0,1)}{(i + 1)}"));
 			}
 		}
 
 		public bool MaVsechnyFigurkyVDomecku()
 		{
-			return Figurky.All(figurka => figurka.JeVDomecku());
+			return figurky.All(figurka => figurka.JeVDomecku());
 		}
 
 		public Figurka? DejFigurkuKterouHrat(int hod)
