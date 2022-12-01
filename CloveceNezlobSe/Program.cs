@@ -3,7 +3,7 @@ using CloveceNezlobSe;
 
 static Hrac HrajPartii()
 {
-	HerniPlan herniPlan = new LinearniHerniPlan(15);
+	HerniPlan herniPlan = new LinearniHerniPlan(pocetPolicek: 40);
 
 	Hra hra = new Hra(herniPlan);
 
@@ -33,7 +33,7 @@ var originalConsoleOut = Console.Out;
 Console.SetOut(TextWriter.Null);
 var sw = Stopwatch.StartNew();
 
-for (int i = 0; i < 50000; i++)
+for (int i = 0; i < 10000; i++)
 {
 	Hrac vitez = HrajPartii();
 	vysledkyHer[vitez.Jmeno] = vysledkyHer.GetValueOrDefault(vitez.Jmeno, 0) + 1;

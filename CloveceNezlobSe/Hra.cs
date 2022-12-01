@@ -3,7 +3,10 @@
 	public class Hra
 	{
 		public HerniPlan HerniPlan { get; private set; }
-		public List<Hrac> Vitezove { get; } = new();
+		
+		private List<Hrac> vitezove = new();
+		public IReadOnlyList<Hrac> Vitezove => vitezove.AsReadOnly();
+		
 		List<Hrac> hraci = new();
 		
 		public Hra(HerniPlan herniPlan)
@@ -68,7 +71,7 @@
 
 						if (hrac.MaVsechnyFigurkyVDomecku())
 						{
-							Vitezove.Add(hrac);
+							vitezove.Add(hrac);
 						}
 					}
 				}
