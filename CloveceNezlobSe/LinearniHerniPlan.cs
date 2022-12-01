@@ -6,6 +6,7 @@
 	public class LinearniHerniPlan : HerniPlan
 	{
 		List<Policko> policka;
+		public override IReadOnlyList<Policko> Policka => policka.AsReadOnly();
 
 		public override int MaximalniPocetHracu => int.MaxValue;
 

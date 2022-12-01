@@ -2,6 +2,8 @@
 {
 	public abstract class HerniPlan
 	{
+		public abstract IReadOnlyList<Policko> Policka { get; }
+		
 		public abstract int MaximalniPocetHracu { get; }
 
 		public abstract void DejFigurkuNaStartovniPolicko(Figurka figurka);
