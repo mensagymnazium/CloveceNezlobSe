@@ -1,6 +1,8 @@
-﻿namespace CloveceNezlobSe
+﻿using CloveceNezlobSe.VlastniHerniStrategie;
+
+namespace CloveceNezlobSe
 {
-	public class Hrac
+    public class Hrac
 	{
 		public string Jmeno { get; private set; }
 

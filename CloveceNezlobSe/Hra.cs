@@ -30,6 +30,9 @@
 		
 		public void Start()
 		{
+            //Aby se hra dala spusti vícekrát
+			vitezove.Clear();
+
 			// TODO Kontrola vstupních podmínek pro zahájení hry.
 			foreach (var hrac in hraci)
 			{
