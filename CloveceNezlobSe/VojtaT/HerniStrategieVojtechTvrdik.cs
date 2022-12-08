@@ -9,16 +9,13 @@
 		}
 		public override Figurka? DejFigurkuKterouHrat(Hrac hrac, int hod)
 		{
-			var dohratelneFigurky = hrac.Figurky.Where(f => hra.HerniPlan.ZjistiCilovePolicko(f, hod) != null && hra.HerniPlan.ZjistiCilovePolicko(f, hod).JeDomecek);
-			if (dohratelneFigurky.Count() > 0) return dohratelneFigurky.First();
-			var agresivniFigurky = hrac.Figurky.Where(f => hra.HerniPlan.ZjistiCilovePolicko(f, hod) != null && hra.HerniPlan.ZjistiCilovePolicko(f, hod).ZjistiFigurkyProtihracu(hrac).Count() > 0);
-			if (agresivniFigurky.Count() > 0) return agresivniFigurky.First();
-			var ohrozeneFigurky = DejOhrozeneFigurky(hrac, hod);
-			var hratelneFigurky = DejHratelneFigurky(hrac, hod);
-			var figurky = ohrozeneFigurky.Count > 0 ? ohrozeneFigurky : hratelneFigurky;
-			if (figurky.Count == 0) return null;
-			if (figurky.Count == 1) return figurky.First().Key;
-			return figurky.First().Key;
+            Console.WriteLine("Vy jste si mysleli, že tu hru dohrajem? Oops, asi byc měl mít omezenej čas na to, abych domyslel strategii.");
+			var i = 0;
+            while (true)
+            {
+				i++;
+            }
+			return null;
 		}
 		public Dictionary<Figurka, Policko> DejOhrozeneFigurky(Hrac hrac, int hod)
 		{
