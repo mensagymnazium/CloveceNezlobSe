@@ -59,7 +59,16 @@
 
 					var hod = kostka.Hod();
 
-					var figurka = hrac.DejFigurkuKterouHrat(hod);
+					Figurka figurka;
+					try
+					{
+						figurka = hrac.DejFigurkuKterouHrat(hod);
+					}
+					catch
+					{
+						figurka = null;
+					}
+					
 					if (figurka == null)
 					{
 						Console.WriteLine($"Hráč {hrac.Jmeno} nemůže tahnout.");
@@ -85,7 +94,7 @@
 					}
 				}
 				
-				if (Vitezove.Count == hraci.Count)
+				if (Vitezove.Count > 0)
 				{
 					Console.WriteLine("Hra skončila.");
 					break;

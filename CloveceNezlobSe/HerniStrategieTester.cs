@@ -6,7 +6,7 @@ namespace CloveceNezlobSe;
 
 public class HerniStrategieTester
 {
-    public Dictionary<string, int> Test(int pocetTestu, Hra prefabrikatHry)
+    public Dictionary<string, int> Test(int pocetTestu, Func<Hra> hraActivator)
     {
         var vysledkyHer = new Dictionary<string, int>(); // Key: hráč, Value: počet vítěztví
        
@@ -17,7 +17,8 @@ public class HerniStrategieTester
 
         for (int i = 0; i < pocetTestu; i++)
         {
-            Hrac vitez = HrajPartii(prefabrikatHry);
+			var hra = hraActivator();
+			var vitez = HrajPartii(hra);
             vysledkyHer[vitez.Jmeno] = vysledkyHer.GetValueOrDefault(vitez.Jmeno, 0) + 1;
         }
 
@@ -27,7 +28,7 @@ public class HerniStrategieTester
         var consoleLogBuilder = new StringBuilder();
         consoleLogBuilder.AppendLine($"Odehráno ({sw.ElapsedMilliseconds:n2} ms)");
 
-        foreach (var vysledek in vysledkyHer)
+        foreach (var vysledek in vysledkyHer.OrderByDescending(i => i.Value))
         {
             consoleLogBuilder.AppendLine($"\t{vysledek.Key}: {((double)vysledek.Value / pocetTestu):p2}");
         }
@@ -36,13 +37,13 @@ public class HerniStrategieTester
 
         return vysledkyHer;
     }
+    
 
 
-
-    private Hrac HrajPartii(Hra prefabrikatHry)
+    private Hrac HrajPartii(Hra hra)
     {
-        prefabrikatHry.NastavNahodnePoradiHracu();
-        prefabrikatHry.Start();
-        return prefabrikatHry.Vitezove[0]; // vrátíme vítěze
+        hra.NastavNahodnePoradiHracu();
+        hra.Start();
+        return hra.Vitezove[0]; // vrátíme vítěze
     }
 }

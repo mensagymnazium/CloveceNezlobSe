@@ -6,19 +6,9 @@ using System.Threading.Tasks;
 
 namespace CloveceNezlobSe
 {
-	public class TurnajStrategii
+	public class TurnajDvouher : TurnajBase
 	{
-		public int PocetHer { get; init; } = 5000;
-		public int VelikostHernihoPlanu { get; init; } = 40;
-
-		private List<HerniStrategieDescriptor> herniStrategie = new();
-
-		public void PridejStrategii(HerniStrategieDescriptor strategieDescriptor)
-		{
-			herniStrategie.Add(strategieDescriptor);
-		}
-
-		public void Start()
+		public override void Start()
 		{
 			var celkoveVysledky = herniStrategie.ToDictionary(i => i.Name, i => new TurnajovyVysledek());
 
@@ -30,18 +20,22 @@ namespace CloveceNezlobSe
 					var strategie2 = herniStrategie[j];
 
 					var tester = new HerniStrategieTester();
-					var prefabrikatHry = new Hra(new LinearniHerniPlan(this.VelikostHernihoPlanu));
-					prefabrikatHry.PridejHrace(new Hrac(strategie1.Name, strategie1.Activator(prefabrikatHry)));
-					prefabrikatHry.PridejHrace(new Hrac(strategie2.Name, strategie2.Activator(prefabrikatHry)));
+					var hraActivator = () =>
+					{
+						var hra = new Hra(new LinearniHerniPlan(this.VelikostHernihoPlanu));
+						hra.PridejHrace(new Hrac(strategie1.Name, strategie1.Activator(hra)));
+						hra.PridejHrace(new Hrac(strategie2.Name, strategie2.Activator(hra)));
+						return hra;
+					};
 
-					var vysledky = tester.Test(this.PocetHer, prefabrikatHry);
+					var vysledky = tester.Test(this.PocetHer, hraActivator);
 					var vitez = vysledky.OrderByDescending(i => i.Value).First();
 
 					celkoveVysledky[vitez.Key].PocetVitezstvi++;
 					foreach (var vysledek in vysledky)
 					{
 						celkoveVysledky[vysledek.Key].VyhranychHer = celkoveVysledky[vysledek.Key].VyhranychHer + vysledek.Value;
-					}					
+					}
 				}
 			}
 
