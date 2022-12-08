@@ -1,5 +1,4 @@
 ﻿using CloveceNezlobSe;
-using CloveceNezlobSe.VlastniHerniStrategie;
 
 public class HerniStrategieDescriptor
 {

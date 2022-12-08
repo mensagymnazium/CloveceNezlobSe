@@ -1,5 +1,5 @@
 ﻿using CloveceNezlobSe;
-using CloveceNezlobSe.VlastniHerniStrategie;
+using CloveceNezlobSe.MartinF;
 using System.Text;
 
 Console.OutputEncoding = Encoding.UTF8;

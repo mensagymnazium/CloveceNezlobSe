@@ -1,4 +1,4 @@
-﻿namespace CloveceNezlobSe.VlastniHerniStrategie
+﻿namespace CloveceNezlobSe
 {
     public class HerniStrategieTahniPrvniMoznouFigurkou : HerniStrategie
     {

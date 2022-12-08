@@ -1,6 +1,4 @@
-﻿using CloveceNezlobSe.VlastniHerniStrategie;
-
-namespace CloveceNezlobSe
+﻿namespace CloveceNezlobSe
 {
     public class Hrac
 	{
