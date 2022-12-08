@@ -1,9 +1,13 @@
 ﻿using CloveceNezlobSe;
 using CloveceNezlobSe.VlastniHerniStrategie;
+using System.Text;
 
+Console.OutputEncoding = Encoding.UTF8;
 
-var tester = new HerniStrategieTester();
-var prefabrikatHry = new Hra(new LinearniHerniPlan(40));
-prefabrikatHry.PridejHrace(new Hrac("Martin:custom",new HerniStrategieMartinF(prefabrikatHry,new HerniStrategieMartinFVahy())));
-prefabrikatHry.PridejHrace(new Hrac("Robert:seberJinakPrvni",new HerniStrategiePreferujVyhazovaniJinakPrvniMoznou(prefabrikatHry)));
-tester.Test(5000,prefabrikatHry);
+var turnaj = new TurnajStrategii();
+
+turnaj.PridejStrategii(new("HerniStrategieMartinF", hra => new HerniStrategieMartinF(hra, new HerniStrategieMartinFVahy())));
+turnaj.PridejStrategii(new("HerniStrategiePreferujVyhazovaniJinakPrvniMoznou", hra => new HerniStrategiePreferujVyhazovaniJinakPrvniMoznou(hra)));
+turnaj.PridejStrategii(new("HerniStrategieTahniPrvniMoznouFigurkou", hra => new HerniStrategieTahniPrvniMoznouFigurkou(hra)));
+
+turnaj.Start();
