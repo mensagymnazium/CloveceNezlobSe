@@ -63,6 +63,12 @@
 					if (figurka == null)
 					{
 						Console.WriteLine($"Hráč {hrac.Jmeno} nemůže tahnout.");
+						//if (Vitezove.Count == hraci.Count - 1)
+						//{
+						//	Console.WriteLine($"Poslední hráč.");
+						//	vitezove.Add(hrac);
+						//	return;
+						//}
 						continue;
 					}
 
