@@ -47,8 +47,20 @@ namespace CloveceNezlobSe
                     }
                 }
             }
-            if (kdoMaUtect.Count > 0)
-                return kdoMaUtect.MinBy(f => JakDaleko(f));
+
+            if (kdoMaUtect.Any())
+            {
+                while (true)
+                {
+                    if (!kdoMaUtect.Any())
+                        break;
+                    Figurka figurka = kdoMaUtect.MinBy(f => JakDaleko(f));
+                    if (hra.HerniPlan.ZjistiCilovePolicko(figurka, hod).JeObsazeno())
+                        kdoMaUtect.Remove(figurka);
+                    else
+                        return figurka;
+                }
+            }
 
             var figurkyNaCeste = hrac.Figurky.Where(figurka => !figurka.JeVDomecku()).ToList();
             var figurkyKtereMuzuHrat = figurkyNaCeste.Where(figurka => hra.HerniPlan.MuzuTahnout(figurka, hod));
