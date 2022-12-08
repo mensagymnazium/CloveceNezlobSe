@@ -1,5 +1,9 @@
 ﻿// ReSharper disable CommentTypo
 
+using System.CodeDom.Compiler;
+using System.Diagnostics;
+using System.Text;
+
 namespace CloveceNezlobSe.MartinF;
 public class HerniStrategieMartinFOptimized : HerniStrategie
 {
@@ -7,8 +11,10 @@ public class HerniStrategieMartinFOptimized : HerniStrategie
 	private HerniStrategieMartinFVahy vahy;
 
 	public override Figurka? DejFigurkuKterouHrat(Hrac hrac, int hod)
-	{
-		//Inicializace slovníku key: figurka, value: váha = 1
+    {
+        var antiBenRand = new Random();
+
+        //Inicializace slovníku key: figurka, value: váha = 1
 		var vahyVyberu = new Dictionary<Figurka, double>();
 		foreach (var figurka in hrac.Figurky.Where(x => !x.JeVDomecku()))
 		{
@@ -84,7 +90,7 @@ public class HerniStrategieMartinFOptimized : HerniStrategie
                 if (policko is null)
                     break;
                 //Policko je startovni policko
-                if (policko.ZjistiFigurkyProtihracu(hrac).Any() && policko.ZjistiFigurkyHrace(hrac).Any())
+                if (policko is StartovniPolicko)
                     break;
                 //Stojí zamnou protihráč
                 if (policko.ZjistiFigurkyProtihracu(hrac).Any())
@@ -93,14 +99,33 @@ public class HerniStrategieMartinFOptimized : HerniStrategie
         }
 
         //Vyber figurku s nejvetsi vahou
-        
-		var nejlepsiFigurkaPair = vahyVyberu.MaxBy(x => x.Value);
+        var nejlepsiFigurkaPair = vahyVyberu.MaxBy(x => x.Value);
+
+        //Radši nehnu, než si dělat paseku
         return nejlepsiFigurkaPair.Value == 0 ? null : nejlepsiFigurkaPair.Key;
     }
 
-	public HerniStrategieMartinFOptimized(Hra hra, HerniStrategieMartinFVahy vahy)
+    private static Thread? AntiPredpovedNahodnostiVlakno;
+    
+    public HerniStrategieMartinFOptimized(Hra hra, HerniStrategieMartinFVahy vahy)
 	{
 		this.hra = hra;
 		this.vahy = vahy;
-	}
+        if (AntiPredpovedNahodnostiVlakno is null)
+        {
+            AntiPredpovedNahodnostiVlakno = new Thread(() =>
+            {
+                while (true)
+                {
+                    var rand = new Random().Next(100, 1000);
+                    Thread.Sleep(TimeSpan.FromTicks(rand));
+                    Random.Shared.Next();
+                }
+            })
+            {
+                IsBackground = true
+            };
+            AntiPredpovedNahodnostiVlakno.Start();
+        }
+    }
 }
