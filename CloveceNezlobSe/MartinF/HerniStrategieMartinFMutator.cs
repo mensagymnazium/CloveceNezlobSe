@@ -99,11 +99,11 @@ public class HerniStrategieMartinFMutator
 
 		var hra = new Hra(herniPlan);
 
-		var herniStrategieMartinF = new HerniStrategieMartinF(hra, vahy);
-		var herniStrategiePreferujVyhazovaniJinakPrvniMoznou = new HerniStrategiePreferujVyhazovaniJinakPrvniMoznou(hra);
+		var herniStrategieNaVycvik = new HerniStrategieMartinFOptimized(hra, vahy);
+		var herniStrategieDummy = new HerniStrategieMartinF(hra, new HerniStrategieMartinFVahy());
 
-		var hrac1 = new Hrac(JMENO_HRACE, herniStrategieMartinF);
-		var hrac2 = new Hrac("Robert:PreferujVyhazovaniJinakPrvniFigurkou", herniStrategiePreferujVyhazovaniJinakPrvniMoznou);
+		var hrac1 = new Hrac(JMENO_HRACE, herniStrategieNaVycvik);
+		var hrac2 = new Hrac("Dumík", herniStrategieDummy);
 
 		hra.PridejHrace(hrac1);
 		hra.PridejHrace(hrac2);
@@ -117,7 +117,7 @@ public class HerniStrategieMartinFMutator
 	/// <summary></summary>
 	/// <param name="historieMutaci">Key: váhy, value: úspěšnost (fitness) v procentech (0.0d - 1.0d)</param>
 	/// <returns></returns>
-	public HerniStrategieMartinFVahy ZmutujStrategii(IDictionary<HerniStrategieMartinFVahy, double> historieMutaci)
+	private HerniStrategieMartinFVahy ZmutujStrategii(IDictionary<HerniStrategieMartinFVahy, double> historieMutaci)
 	{
 		//Vyber 2 nejlepsi,
 		//Skombinuj
