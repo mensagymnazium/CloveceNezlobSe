@@ -20,7 +20,7 @@ namespace CloveceNezlobSe
 
 		public void Start()
 		{
-			var celkoveVysledky = herniStrategie.ToDictionary(i => i.Name, i => 0);	// [jméno, počet vítězství]
+			var celkoveVysledky = herniStrategie.ToDictionary(i => i.Name, i => new TurnajovyVysledek());
 
 			for (int i = 0; i < herniStrategie.Count; i++)
 			{
@@ -37,15 +37,25 @@ namespace CloveceNezlobSe
 					var vysledky = tester.Test(this.PocetHer, prefabrikatHry);
 					var vitez = vysledky.OrderByDescending(i => i.Value).First();
 
-					celkoveVysledky[vitez.Key]++;
+					celkoveVysledky[vitez.Key].PocetVitezstvi++;
+					foreach (var vysledek in vysledky)
+					{
+						celkoveVysledky[vysledek.Key].VyhranychHer = celkoveVysledky[vysledek.Key].VyhranychHer + vysledek.Value;
+					}					
 				}
 			}
 
 			Console.WriteLine("CELKOVÉ VÝSLEDKY:");
-			foreach (var vysledek in celkoveVysledky.OrderByDescending(i => i.Value))
+			foreach (var vysledek in celkoveVysledky.OrderByDescending(i => i.Value.PocetVitezstvi).ThenByDescending(i => i.Value.VyhranychHer))
 			{
-				Console.WriteLine($"\t{vysledek.Key}: {vysledek.Value} vítězství");
+				Console.WriteLine($"\t{vysledek.Key}: {vysledek.Value.PocetVitezstvi} vítězství ({vysledek.Value.VyhranychHer} vyhraných her)");
 			}
+		}
+
+		public class TurnajovyVysledek
+		{
+			public int PocetVitezstvi { get; set; }
+			public int VyhranychHer { get; set; }
 		}
 	}
 }
