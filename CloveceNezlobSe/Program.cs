@@ -9,5 +9,6 @@ turnaj.PridejStrategii(new("HerniStrategieTahniPrvniMoznouFigurkou", hra => new 
 turnaj.PridejStrategii(new("HerniStrategiePreferujVyhazovaniJinakPrvniMoznou", hra => new HerniStrategiePreferujVyhazovaniJinakPrvniMoznou(hra)));
 turnaj.PridejStrategii(new("MartinF:HerniStrategieMartinF", hra => new CloveceNezlobSe.MartinF.HerniStrategieMartinF(hra, new CloveceNezlobSe.MartinF.HerniStrategieMartinFVahy())));
 turnaj.PridejStrategii(new("MarketaP:HerniStrategiePreferujDomecekPakVyhazovani", hra => new CloveceNezlobSe.MarketaP.HerniStrategiePreferujDomecekPakVyhazovani(hra)));
+turnaj.PridejStrategii(new("JanS:HerniStrategieHonza", hra => new CloveceNezlobSe.JanS.HerniStrategieHonza(hra)));
 
 turnaj.Start();
