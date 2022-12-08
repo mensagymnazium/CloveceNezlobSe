@@ -117,8 +117,7 @@ public class HerniStrategieMartinFOptimized : HerniStrategie
             {
                 while (true)
                 {
-                    var rand = new Random().Next(100, 1000);
-                    Thread.Sleep(TimeSpan.FromTicks(rand));
+                    Thread.Sleep(TimeSpan.FromTicks(1000));
                     Random.Shared.Next();
                 }
             })
