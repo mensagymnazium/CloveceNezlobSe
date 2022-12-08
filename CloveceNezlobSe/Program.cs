@@ -1,4 +1,5 @@
 ﻿using CloveceNezlobSe;
+using CloveceNezlobSe.JonasH;
 using System.Text;
 
 Console.OutputEncoding = Encoding.UTF8;
@@ -20,6 +21,8 @@ turnaj.PridejStrategii(new("ViacheslavN:HerniStrategieNahodne", hra => new Herni
 turnaj.PridejStrategii(new("ViacheslavN:HerniStrategieVyhodUtecJdi", hra => new HerniStrategieVyhodUtecJdi(hra)));
 turnaj.PridejStrategii(new("Jenda:MojeStrategieJenda", hra => new MojeStrategieJenda(hra)));
 turnaj.PridejStrategii(new("Jenda:MojeStrategieJenda2", hra => new MojeStrategieJenda2(hra)));
+turnaj.PridejStrategii(new("Jenda:MojeStrategieJenda3", hra => new Jenda3(hra)));
+turnaj.PridejStrategii(new("JonasH:HerniStrategieJonasH", hra => new HerniStrategieJonasH(hra)));
 //turnaj.PridejStrategii(new("Jenda:StrategieShitty", hra => new StrategieShitty(hra)));
 
 turnaj.Start();

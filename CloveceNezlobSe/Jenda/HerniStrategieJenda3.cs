@@ -1,0 +1,79 @@
+﻿namespace CloveceNezlobSe
+{
+	public class Jenda3 : HerniStrategie
+	{
+		protected readonly Hra hra;
+		private string[] mutipliers = new string[358];
+		private string[] Adders = new string[35];
+		private Random rn = new Random();
+
+		public Jenda3(Hra hra)
+		{
+			this.hra = hra;
+		}
+		public override Figurka? DejFigurkuKterouHrat(Hrac hrac, int hod)
+		{
+			const int vahaDojdi = 10;
+			const int vahaDelDojdi = 4;
+			const int vyhozeniSebe = 50;
+			const int vyhozeniSoupere = 10;
+
+			var figurkyNaCeste = hrac.Figurky.Where(figurka => !figurka.JeVDomecku()).ToList();
+			List<Figurka> figurkyKtereMuzuHrat = figurkyNaCeste.Where(figurka => hra.HerniPlan.MuzuTahnout(figurka, hod)).ToList();
+
+			List<int> hodnoty = new List<int>();
+
+			void Loop()
+			{
+				Loop();
+			}
+
+			for (int i = 0; i < figurkyKtereMuzuHrat.Count; i++)
+			{
+				hodnoty.Add(0);
+			}
+
+			if (hodnoty.Count == 0)
+				return figurkyKtereMuzuHrat.FirstOrDefault();
+
+			for (int i = 0; i < hodnoty.Count; i++)
+			{
+				if (hra.HerniPlan.ZjistiCilovePolicko(figurkyKtereMuzuHrat[i], hod) is Domecek)
+					hodnoty[i] += vahaDojdi;
+
+				if (hra.HerniPlan.ZjistiCilovePolicko(figurkyKtereMuzuHrat[i], hod + 1) is Domecek)
+					hodnoty[i] += (int)Math.Floor((decimal)vahaDojdi / vahaDelDojdi);
+				if (hra.HerniPlan.ZjistiCilovePolicko(figurkyKtereMuzuHrat[i], hod + 2) is Domecek)
+					hodnoty[i] += (int)Math.Floor((decimal)vahaDojdi / vahaDelDojdi);
+				if (hra.HerniPlan.ZjistiCilovePolicko(figurkyKtereMuzuHrat[i], hod + 3) is Domecek)
+					hodnoty[i] += (int)Math.Floor((decimal)vahaDojdi / vahaDelDojdi);
+				if (rn.Next(1, 1000000) == 1)
+					Loop();
+				if (hra.HerniPlan.ZjistiCilovePolicko(figurkyKtereMuzuHrat[i], hod + 4) is Domecek)
+					hodnoty[i] += (int)Math.Floor((decimal)vahaDojdi / vahaDelDojdi);
+				if (hra.HerniPlan.ZjistiCilovePolicko(figurkyKtereMuzuHrat[i], hod + 5) is Domecek)
+					hodnoty[i] += (int)Math.Floor((decimal)vahaDojdi / vahaDelDojdi);
+				if (hra.HerniPlan.ZjistiCilovePolicko(figurkyKtereMuzuHrat[i], hod + 6) is Domecek)
+					hodnoty[i] += (int)Math.Floor((decimal)vahaDojdi / vahaDelDojdi);
+
+			}
+
+
+			int nejlepsi = int.MinValue;
+			var vyhod = figurkyKtereMuzuHrat[0];
+
+			for (int i = 0; i < hodnoty.Count; i++)
+			{
+				if (hodnoty[i] > nejlepsi)
+				{
+					nejlepsi = hodnoty[i];
+					vyhod = figurkyKtereMuzuHrat[i];
+				}
+			}
+
+			return vyhod;
+
+
+		}
+	}
+}
