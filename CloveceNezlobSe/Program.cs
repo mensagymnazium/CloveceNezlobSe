@@ -1,13 +1,13 @@
 ﻿using CloveceNezlobSe;
-using CloveceNezlobSe.MartinF;
 using System.Text;
 
 Console.OutputEncoding = Encoding.UTF8;
 
 var turnaj = new TurnajStrategii();
 
-turnaj.PridejStrategii(new("HerniStrategieMartinF", hra => new HerniStrategieMartinF(hra, new HerniStrategieMartinFVahy())));
-turnaj.PridejStrategii(new("HerniStrategiePreferujVyhazovaniJinakPrvniMoznou", hra => new HerniStrategiePreferujVyhazovaniJinakPrvniMoznou(hra)));
 turnaj.PridejStrategii(new("HerniStrategieTahniPrvniMoznouFigurkou", hra => new HerniStrategieTahniPrvniMoznouFigurkou(hra)));
+turnaj.PridejStrategii(new("HerniStrategiePreferujVyhazovaniJinakPrvniMoznou", hra => new HerniStrategiePreferujVyhazovaniJinakPrvniMoznou(hra)));
+turnaj.PridejStrategii(new("MartinF:HerniStrategieMartinF", hra => new CloveceNezlobSe.MartinF.HerniStrategieMartinF(hra, new CloveceNezlobSe.MartinF.HerniStrategieMartinFVahy())));
+turnaj.PridejStrategii(new("MarketaP:HerniStrategiePreferujDomecekPakVyhazovani", hra => new CloveceNezlobSe.MarketaP.HerniStrategiePreferujDomecekPakVyhazovani(hra)));
 
 turnaj.Start();
