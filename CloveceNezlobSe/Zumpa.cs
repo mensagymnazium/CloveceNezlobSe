@@ -13,6 +13,6 @@ public class Zumpa : Policko
 
     public override void Vykresli()
     {
-        Console.Write("< Žumpa >:( >");
+        Console.Write("< Žumpa >");
     }
 }

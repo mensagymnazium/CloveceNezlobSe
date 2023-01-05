@@ -1,30 +1,48 @@
 ﻿namespace CloveceNezlobSe;
 
-/// <summary>
-/// Herní plán je tvořen rovnou řadou políček. Všichni hráči začínají na stejném startovním políčku.
-/// </summary>
-public class LinearniHerniPlan : HerniPlan
+public class InsaneHerniPlan : HerniPlan
 {
     List<Policko> policka;
     public override IReadOnlyList<Policko> Policka => policka.AsReadOnly();
 
     public override int MaximalniPocetHracu => int.MaxValue;
 
-    public LinearniHerniPlan(int pocetPolicek)
+    public InsaneHerniPlan()
     {
-        policka = new();
-
-        // startovní políčko
-        policka.Add(new StartovniPolicko(this));
-
-        // ostatní políčka
-        for (int i = 1; i < pocetPolicek - 1; i++)
+        policka = new()
         {
-            policka.Add(new Policko(this));
-        }
+            new StartovniPolicko(this),
 
-        // cílové políčko
-        policka.Add(new Domecek(this));
+            new Policko(this),
+            new Policko(this),
+            new Policko(this),
+            new Policko(this),
+            new Policko(this),
+            new Policko(this),
+
+            new Zumpa(this),
+            new Policko(this),
+            new Policko(this),
+            new Policko(this),
+            new Policko(this),
+            new Policko(this),
+
+            new Policko(this),
+            new Policko(this),
+            new Policko(this),
+            new Policko(this),
+            new Policko(this),
+            new Policko(this),
+
+            new Zumpa(this),
+            new Policko(this),
+            new Policko(this),
+            new Policko(this),
+            new Policko(this),
+            new Policko(this),
+
+            new Domecek(this)
+        };
     }
 
 
@@ -45,7 +63,7 @@ public class LinearniHerniPlan : HerniPlan
             // figurka se vrací na začátek
             indexCile = 0;
         }
-			
+
         if (indexCile >= policka.Count)
         {
             Console.WriteLine($"Figurka {figurka.OznaceniFigurky} vyjela z herní plochy, cíl je potřeba trefit přesně.");
@@ -95,7 +113,7 @@ public class LinearniHerniPlan : HerniPlan
         {
             return false; // figurka není na herní ploše
         }
-			
+
         int indexStavajicihoPolicka = policka.IndexOf(figurka.Policko);
         if (indexStavajicihoPolicka > policka.Count - hod - 1)
         {
