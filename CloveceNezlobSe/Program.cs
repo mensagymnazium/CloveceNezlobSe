@@ -3,20 +3,25 @@ using CloveceNezlobSe;
 
 static Hrac HrajPartii()
 {
-	HerniPlan herniPlan = new LinearniHerniPlan(15);
+	HerniPlan herniPlan = new LinearniHerniPlan(40);
 
 	Hra hra = new Hra(herniPlan);
 
 	HerniStrategie herniStrategieTahniPrvniFigurkou = new HerniStrategieTahniPrvniMoznouFigurkou(hra);
 	HerniStrategie herniStrategiePreferujVyhazovaniJinakPrvniMoznou = new HerniStrategiePreferujVyhazovaniJinakPrvniMoznou(hra);
+	HerniStrategie hernistrategiePreferujvyhru = new HerniStrategiePreferujvyhru(hra);
+	HerniStrategie herniStrategieVsehnyFigurkyVCily = new HerniStrategieVsechnyFigurkyVCily(hra);
 
 	Hrac hrac1 = new Hrac("Karel:PrvniFigurkou", herniStrategieTahniPrvniFigurkou);
 	Hrac hrac2 = new Hrac("Robert:PreferujVyhazovaniJinakPrvniFigurkou", herniStrategiePreferujVyhazovaniJinakPrvniMoznou);
+	Hrac hrac3 = new Hrac("Zbynek:Preferujvyhru", hernistrategiePreferujvyhru);
+	Hrac hrac4 = new Hrac("Zbynek2:PreferujPolickaVDomecku", herniStrategieVsehnyFigurkyVCily);
 	//Hrac hracN = new Hrac("Martin", herniStrategiePreferujVyhazovaniJinakPrvniMoznou);
 
+	//hra.PridejHrace(hrac1);
+	//hra.PridejHrace(hrac2);
+	hra.PridejHrace(hrac3);
 	hra.PridejHrace(hrac1);
-	hra.PridejHrace(hrac2);
-	//hra.PridejHrace(hracN);
 	hra.NastavNahodnePoradiHracu();
 
 	hra.Start();
