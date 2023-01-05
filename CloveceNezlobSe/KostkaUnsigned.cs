@@ -13,7 +13,9 @@ namespace CloveceNezlobSe
 
 		public int Hod()
 		{
-            var x = RandomNumberGenerator.GetInt32(1, pocetSten + 1);
+			var lower = 1;
+			var upper = pocetSten + 1;
+			var x = RandomNumberGenerator.GetInt32(lower, upper);
 			Console.WriteLine($"Kostka hodila {x}.");
 			return x;
 		}
