@@ -40,7 +40,7 @@ public class HerniStrategieMaxJAdvanced : HerniStrategie
 		//Chces byt tak, aby te nemohli vyhodit
 		for (int i = 0; i < hratelneFigurky.Count; i++)
 		{
-			Policko posledniNajitePolicko = new Policko();
+			Policko posledniNajitePolicko = new Policko(hra.HerniPlan);
 			for (int a = 1; a < 7; a++)
 			{
 				var kamDojdu = hra.HerniPlan.ZjistiCilovePolicko(hratelneFigurky[i], -a + hod);
@@ -57,7 +57,7 @@ public class HerniStrategieMaxJAdvanced : HerniStrategie
 		//Chces utect ostatnim
 		for (int i = 0; i < hratelneFigurky.Count; i++)
 		{
-			Policko posledniNajitePolicko = new Policko();
+			Policko posledniNajitePolicko = new Policko(hra.HerniPlan);
 			for (int a = 1; a < 7; a++)
 			{
 				var kamDojdu = hra.HerniPlan.ZjistiCilovePolicko(hratelneFigurky[i], -a);

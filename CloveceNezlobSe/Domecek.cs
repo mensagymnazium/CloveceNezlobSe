@@ -8,8 +8,8 @@ namespace CloveceNezlobSe
 {
 	public class Domecek : Policko
 	{
-		public Domecek() : base(dovolitViceFigurek: true)
-		{
-		}
-	}
+        public Domecek(HerniPlan herniPlan, bool dovolitViceFigurek = true) : base(herniPlan, dovolitViceFigurek)
+        {
+        }
+    }
 }

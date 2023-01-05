@@ -4,14 +4,16 @@
 	{
 		HashSet<Figurka> figurkyNaPolicku = new();
 		bool dovolitViceFigurek;
+		private HerniPlan herniPlan;
 
 		[Obsolete("Použij (policko is Domecek)")]
 		public bool JeDomecek => this is Domecek;
 
-		public Policko(bool dovolitViceFigurek = false)
+		public Policko(HerniPlan herniPlan, bool dovolitViceFigurek = false)
 		{
 			this.dovolitViceFigurek = dovolitViceFigurek;
-		}
+            this.herniPlan = herniPlan;
+        }
 
 		public virtual void PolozFigurku(Figurka figurka)
 		{

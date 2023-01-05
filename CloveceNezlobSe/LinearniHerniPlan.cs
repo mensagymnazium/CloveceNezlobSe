@@ -15,16 +15,16 @@
 			policka = new();
 
 			// startovní políčko
-			policka.Add(new StartovniPolicko());
+			policka.Add(new StartovniPolicko(this));
 
 			// ostatní políčka
 			for (int i = 1; i < pocetPolicek - 1; i++)
 			{
-				policka.Add(new Policko());
+				policka.Add(new Policko(this));
 			}
 
 			// cílové políčko
-			policka.Add(new Domecek());
+			policka.Add(new Domecek(this));
 		}
 
 
