@@ -1,19 +1,31 @@
-﻿# Člověče, nezlob se! (OOP)
+﻿# Člověče, nezlob se! 
 
-Vytvořte simulátor hry *Člověče, nezlob se!* pomocí objektově orientovaného programování (OOP).
+Dnes si (asi naposledy) pohrajeme s *Člověče, nezlob se!*
+Máme posbíraných mnoho strategií (dnes se omezme na ty konvenční, vynecháme "no-limit" řešení z poslední předvánoční hodiny).
 
-Hru zná asi každý, najdete ji i ve [Wikipedii](https://cs.wikipedia.org/wiki/%C4%8Clov%C4%9B%C4%8De,_nezlob_se!). Naším cílem bude naprogramovat simulátor, který bude generovat hody kostkou jako náhodná čísla a bude zaznamenávat postup hry od začátku až do konce.
+Cílem dnešního dne je udělat celou hru zajímavější, pohrát si s dalšími možnostmi oživení hry, popř. otestovat v různých situacích připravené strategie (optimalizovat strategie pro nové situace).
 
-1. Analyzujte, jaké objekty, resp. jejich třídy, budete pro reprezentaci hry potřebovat.
-1. Jaké vlastnosti a operace budou objekty mít?
-1. Vytvořte třídy, které budou jednotlivé objekty popisovat.
-1. Naprogramujte chování jednotlivých objektů.
-1. Sestavte z objektů kompletní simulátor s jednoduchým uživatelským rozhraním (konzolová aplikace, která hru spustí a bude vypisovat údaje z jejího průběhu).
-1. Hru si můžete libovolně zjednodušit, dle svých dovedností a časových možností. Např. nemusíte řešit "nasazování" figurek šestkou na začátku, cílový domeček udělat jako poslední políčko (bez nutnosti trefit ho přesně), nebo neřešit vzájemné vyhazování mezi hráči.
+## Implementujte nové typy figurek:
+1. **Tank** - co přejede, to je mrtvé (vyhazuje i přeskakováním). Tank nemůže být vyhozen ze hry.
+1. **Vrtulník** - může skončit na libovolném políčku bližším, než je hozeno.
 
+## Implementujte nové typy políček:
+1. **Žumpa.** Kdo stoupne na žumpu, vrací se na start.
+1. **Trampolína.** Kdo stoupne na trampolínu, může hrát ještě jednou.
+1. **Nárazník.** Kdo stoupne na nárazník, vrací se zpět o poloviční počet políček.
+1. **Schovka.** Kdo stojí na schovce, nemůže být vyhozen. Na schovce může stát více figurek.
+1. **Upgrade.** Kdo stoupne obyčejnou figurkou na upgrade, může ji změnit na tank/vrtulník/...
 
-## Výzvy
-1. Existují různé variace hry, např. různé herní plány (různý maximální počet hráčů, různé tvary, velikosti, atp.) Navrhněte (a naprogramujte) způsob, jak v simulátoru umožnit volbu herního plánu pro konkrétní simulaci.
-1. Variace může být i v pravidlech, např. pokud hodím kostkou 2x za sebou šestku, vracím se o tři pole nazpět. Navrhněte (a naprogramujte) způsob, jak v simulátoru reprezentovat pravidla a umožnit volbu konkrétních pravidel pro jednotlivé simulace.
-1. Hráči mohou uplatňovat různé strategie. Např. táhnout vždy figurkou, která je nejblíže k cíli, táhnout náhodnou figurkou, nebo brát v úvahu pozici figurek ostatních hráčů. Zkuste navrhnout objektově orientovaný princip, jak umožnit jednotlivým hráčům nastavit různé strategie (popř. vyzkoušejte, které strategie jsou nejúspěšnější).
+## Implementujte nové typy kostky:
+1. **Kostka se zápornými hodnotami.** Kostka může mít vedle kladných i záporné hodnoty.
+
+## Hra
+* vygenerujte náhodně velikost hracího plánu (v rozsahu 10-100 políček).
+* vygenerujte náhodně typy políček v plánu (rozmístění), počty různých typů můžete určit dle velikosti plánu
+* navrhněte vhodný mix pro typy figurek. Např. 4 normální, 1 tank, 1 vrtulník. 
+* zvažte variace pravidel samotných, např. při hození lichého čísla se jde zpět místo vpřed, atp.
+
+Nemusíte implementovat vše. Z výše uvedeného si vyberte, co Vás bude bavit, co se Vám bude dobře implementovat, popř. vymyslete vlastní kreativní variace hry.
+
+Myslete i na strategie, úpravy hry společně s optimalizací vaší strategie by vám měly pomoci vyhrát (ve srovnání s se strategiemi, které neznají nové prvky).
 
