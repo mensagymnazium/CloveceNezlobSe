@@ -26,6 +26,7 @@ turnaj.PridejStrategii(new("MaxJ:HerniStrategieMaxJAdvanced", hra => new HerniSt
 turnaj.PridejStrategii(new("JanSl:StrategieSliva", hra => new StrategieSliva(hra)));
 turnaj.PridejStrategii(new("RisaD:HerniStrategieRisa", hra => new HerniStrategieRisa(hra)));
 turnaj.PridejStrategii(new("BenS:DiceMaster", hra => new CloveceNezlobSe.DiceMaster.HerniStrategieDiceMaster(hra)));
+turnaj.PridejStrategii(new("KlaraF:HerniStrategieDomecekVyhazujPrvniKlaraF", hra => new HerniStrategieDomecekVyhazujPrvniKlaraF(hra)));
 
 //turnaj.PridejStrategii(new("VojtaT:HerniStrategieVojtechTvrdik", hra => new HerniStrategieVojtechTvrdik(hra)));
 //turnaj.PridejStrategii(new("Jenda:MojeStrategieJenda3", hra => new Jenda3(hra)));
