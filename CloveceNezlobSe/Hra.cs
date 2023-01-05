@@ -42,7 +42,7 @@
 				}
 			}
 
-			Kostka kostka = new Kostka(pocetSten: 6);
+			IKostka kostka = new KostkaSigned(pocetSten: 6);
 
 			while (true)
 			{
