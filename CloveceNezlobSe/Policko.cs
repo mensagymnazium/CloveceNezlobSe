@@ -15,7 +15,7 @@ public class Policko
         this.herniPlan = herniPlan;
     }
 
-    public virtual void PolozFigurku(Figurka figurka)
+    public virtual void PolozFigurku(Figurka figurka, int hod)
     {
         if (JeObsazeno())
         {

@@ -6,7 +6,7 @@ public class Zumpa : Policko
     {
     }
 
-    public override void PolozFigurku(Figurka figurka)
+    public override void PolozFigurku(Figurka figurka, int hod)
     {
         herniPlan.DejFigurkuNaStartovniPolicko(figurka);
     }
