@@ -1,6 +1,6 @@
 ﻿# Člověče, nezlob se! 
 
-Dnes si (asi naposledy) pohrajeme s *Člověče, nezlob se!*
+Dnes si (snad ne naposledy) pohrajeme s *Člověče, nezlob se!*
 Máme posbíraných mnoho strategií (dnes se omezme na ty konvenční, vynecháme "no-limit" řešení z poslední předvánoční hodiny).
 
 Cílem dnešního dne je udělat celou hru zajímavější, pohrát si s dalšími možnostmi oživení hry, popř. otestovat v různých situacích připravené strategie (optimalizovat strategie pro nové situace).
