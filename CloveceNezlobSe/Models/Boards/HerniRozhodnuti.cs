@@ -1,4 +1,6 @@
-﻿namespace CloveceNezlobSe.Models.Boards
+﻿using CloveceNezlobSe.Models.Figurky;
+
+namespace CloveceNezlobSe.Models.Boards
 {
 	public class HerniRozhodnuti
 	{

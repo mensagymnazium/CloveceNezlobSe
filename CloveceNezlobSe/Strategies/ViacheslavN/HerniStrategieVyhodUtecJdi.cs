@@ -1,5 +1,6 @@
 using CloveceNezlobSe.Models;
 using CloveceNezlobSe.Models.Boards;
+using CloveceNezlobSe.Models.Figurky;
 using System.Collections.Generic;
 using System.Linq;
 

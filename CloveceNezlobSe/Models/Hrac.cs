@@ -1,4 +1,5 @@
 ﻿using CloveceNezlobSe.Models.Boards;
+using CloveceNezlobSe.Models.Figurky;
 using CloveceNezlobSe.Strategies;
 
 namespace CloveceNezlobSe.Models
@@ -18,10 +19,11 @@ namespace CloveceNezlobSe.Models
 			this.Jmeno = jmeno;
 			this.herniStrategie = herniStrategie;
 
-			for (int i = 0; i < 4; i++)
+			for (int i = 0; i < 3; i++)
 			{
 				figurky.Add(new Figurka(this, $"{this.Jmeno.Substring(0, 1)}{(i + 1)}"));
 			}
+			figurky.Add(new Tank(this, $"{this.Jmeno.Substring(0, 1)}{(4)}"));
 		}
 
 		public bool MaVsechnyFigurkyVDomecku()

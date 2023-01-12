@@ -1,4 +1,5 @@
 ﻿using CloveceNezlobSe.Models.Boards;
+using CloveceNezlobSe.Models.Figurky;
 
 namespace CloveceNezlobSe.Models;
 
@@ -98,15 +99,50 @@ public class LinearniHerniPlan : HerniPlan
 
 	private void PosunFigurku(Figurka figurka, Policko stavajiciPolicko, Policko cilovePolicko)
 	{
-		stavajiciPolicko.ZvedniFigurku(figurka);
-		Console.WriteLine($"Přesouvám figurku {figurka.OznaceniFigurky} z pozice {policka.IndexOf(stavajiciPolicko)} na pozici {policka.IndexOf(cilovePolicko)}.");
-		if (cilovePolicko.JeObsazeno())
-		{
-			Figurka vyhozenaFigurka = cilovePolicko.ZvedniJedinouFigurku();
-			Console.WriteLine($"Vyhazuji figurku {vyhozenaFigurka.OznaceniFigurky} hráče: {vyhozenaFigurka.Hrac.Jmeno}");
-			policka[0].PolozFigurku(vyhozenaFigurka);
+        switch (figurka)
+        {
+			case Tank:
+				int indexStavajicihoPolicka = policka.IndexOf(stavajiciPolicko);
+				int indexCile = policka.IndexOf(cilovePolicko);
+
+				stavajiciPolicko.ZvedniFigurku(figurka);
+				Console.WriteLine($"Přesouvám figurku {figurka.OznaceniFigurky} z pozice {policka.IndexOf(stavajiciPolicko)} na pozici {policka.IndexOf(cilovePolicko)}.");
+				Policko prejetePolicko = policka[indexStavajicihoPolicka];
+				
+				for(int i = indexStavajicihoPolicka+1; i < indexCile; i++)
+                {
+					prejetePolicko = policka[i];
+					if (prejetePolicko.JeObsazeno())
+					{
+						Figurka vyhozenaFigurka = prejetePolicko.ZvedniJedinouFigurku();
+						Console.WriteLine($"Vyhazuji figurku {vyhozenaFigurka.OznaceniFigurky} hráče: {vyhozenaFigurka.Hrac.Jmeno}");
+						policka[0].PolozFigurku(vyhozenaFigurka);
+					}
+				}
+				if (cilovePolicko.JeObsazeno())
+				{
+					Figurka vyhozenaFigurka = cilovePolicko.ZvedniJedinouFigurku();
+					Console.WriteLine($"Vyhazuji figurku {vyhozenaFigurka.OznaceniFigurky} hráče: {vyhozenaFigurka.Hrac.Jmeno}");
+					policka[0].PolozFigurku(vyhozenaFigurka);
+				}
+				cilovePolicko.PolozFigurku(figurka);
+				break;
+
+
+
+			default:
+				stavajiciPolicko.ZvedniFigurku(figurka);
+				Console.WriteLine($"Přesouvám figurku {figurka.OznaceniFigurky} z pozice {policka.IndexOf(stavajiciPolicko)} na pozici {policka.IndexOf(cilovePolicko)}.");
+				if (cilovePolicko.JeObsazeno())
+				{
+					Figurka vyhozenaFigurka = cilovePolicko.ZvedniJedinouFigurku();
+					Console.WriteLine($"Vyhazuji figurku {vyhozenaFigurka.OznaceniFigurky} hráče: {vyhozenaFigurka.Hrac.Jmeno}");
+					policka[0].PolozFigurku(vyhozenaFigurka);
+				}
+				cilovePolicko.PolozFigurku(figurka);
+				break;
+
 		}
-		cilovePolicko.PolozFigurku(figurka);
 	}
 
 	public override Policko? ZjistiCilovePolicko(Figurka figurka, int hod)

@@ -1,4 +1,6 @@
-﻿namespace CloveceNezlobSe.Models;
+﻿using CloveceNezlobSe.Models.Figurky;
+
+namespace CloveceNezlobSe.Models;
 
 public class Policko
 {
@@ -24,12 +26,13 @@ public class Policko
 
     public Figurka ZvedniJedinouFigurku()
     {
-        if (figurkyNaPolicku.Count != 1)
+        HashSet<Figurka> viditelneFigurky = figurkyNaPolicku.Where(f => f.detectable).ToHashSet();
+        if (viditelneFigurky.Count != 1)
         {
             throw new InvalidOperationException("Na políčku není jediná figurka.");
         }
 			
-        var figurka = figurkyNaPolicku.First();
+        var figurka = viditelneFigurky.First();
         ZvedniFigurku(figurka);
 
         return figurka;
@@ -58,7 +61,8 @@ public class Policko
 
     public bool JeObsazeno()
     {
-        return !dovolitViceFigurek && (figurkyNaPolicku.Count != 0);
+        HashSet<Figurka> viditelneFigurky = figurkyNaPolicku.Where(f => f.detectable).ToHashSet();
+        return !dovolitViceFigurek && (viditelneFigurky.Count != 0);
     }
 
     public virtual void Vykresli()
