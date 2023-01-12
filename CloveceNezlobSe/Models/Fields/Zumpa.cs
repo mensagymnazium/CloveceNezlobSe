@@ -8,6 +8,7 @@ public class Zumpa : Policko
 
     public override void Vykresli()
     {
-        Console.Write("< Žumpa >");
+        Console.BackgroundColor = ConsoleColor.Green;
+        Console.Write("[Žumpa]");
     }
 }

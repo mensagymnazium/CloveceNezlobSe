@@ -8,7 +8,7 @@ var turnaj = new TurnajDvouher()
 {
     VelikostHernihoPlanu = 30,
     PocetHer = 100,
-	DisableConsoleDuringGame = true
+	DisableConsoleDuringGame = false
 };
 
 turnaj.PridejStrategii(new("HerniStrategieTahniPrvniMoznouFigurkou", hra => new HerniStrategieTahniPrvniMoznouFigurkou(hra)));
