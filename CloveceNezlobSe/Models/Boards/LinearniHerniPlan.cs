@@ -93,7 +93,7 @@ public class LinearniHerniPlan : HerniPlan
 				break;
 		}
 
-		return false; //(hozeneCislo == 6); // pokud hodí šestku a odehrál, hraje znovu
+		return (hozeneCislo == 6); // pokud hodí šestku a odehrál, hraje znovu
 	}
 
 	private void PosunFigurku(Figurka figurka, Policko stavajiciPolicko, Policko cilovePolicko)
