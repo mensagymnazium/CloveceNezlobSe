@@ -14,6 +14,8 @@
 
 		public abstract void HrajTahHrace(Hrac hrac, IKostka kostka);
 
+		public abstract void VycistiPolicko(Policko policko);
+
 		public abstract void Vykresli();
 	}
 }

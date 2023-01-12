@@ -1,4 +1,6 @@
-﻿namespace CloveceNezlobSe.Models;
+﻿using CloveceNezlobSe.Models.Things;
+
+namespace CloveceNezlobSe.Models;
 
 public class Policko
 {
@@ -6,12 +8,26 @@ public class Policko
     protected bool dovolitViceFigurek;
     protected HerniPlan herniPlan;
 
+    public Vec? VecNa { get; set; } = null;
+
     public Policko(HerniPlan herniPlan, bool dovolitViceFigurek = false)
     {
         this.dovolitViceFigurek = dovolitViceFigurek;
         this.herniPlan = herniPlan;
     }
 
+    public virtual bool JeVolneProVec() => VecNa == null;
+    public virtual bool PridejVec(Vec vec)
+    {
+        if (!JeVolneProVec())
+        {
+            return false;
+        }
+
+        this.VecNa = vec;
+
+        return true;
+    }
     public virtual void PolozFigurku(Figurka figurka)
     {
         if (JeObsazeno())
@@ -21,6 +37,7 @@ public class Policko
         figurkyNaPolicku.Add(figurka);
         figurka.NastavPolicko(this);
     }
+
 
     public Figurka ZvedniJedinouFigurku()
     {
