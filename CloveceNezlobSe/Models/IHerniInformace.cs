@@ -1,4 +1,6 @@
-﻿namespace CloveceNezlobSe.Models;
+﻿using CloveceNezlobSe.Models.Figurky;
+
+namespace CloveceNezlobSe.Models;
 
 public interface IHerniInformace
 {

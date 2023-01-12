@@ -48,7 +48,7 @@ public class LinearniHerniPlan : HerniPlan
 			HerniRozhodnuti? herniRozhodnuti;
 			try
             {
-                var herniInformace = new HerniInformace(this);
+                var herniInformace = new HerniInformace(this,Hra);
                 herniRozhodnuti = hrac.DejHerniRozhodnuti(hozeneCislo, herniInformace); // TODO HerniInformace
 			}
 			catch

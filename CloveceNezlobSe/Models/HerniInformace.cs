@@ -1,4 +1,6 @@
-﻿namespace CloveceNezlobSe.Models;
+﻿using CloveceNezlobSe.Models.Figurky;
+
+namespace CloveceNezlobSe.Models;
 
 /// <summary>
 /// Třída umožňuje přístup k nynějšímu stavu hry, který může hráč využít pro tvorbu jeho herní 
