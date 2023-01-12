@@ -8,12 +8,15 @@
 		private List<Hrac> vitezove = new();
 
 		private List<Hrac> hraci = new();
-		private IKostka kostka;
+        public IReadOnlyList<Hrac> Hraci => hraci.AsReadOnly();
+
+		public IKostka Kostka;
 
 		public Hra(HerniPlan herniPlan)
 		{
 			this.HerniPlan = herniPlan;
-			this.kostka = new KostkaUnsigned(pocetSten: 6);
+            this.HerniPlan.Hra = this;
+			this.Kostka = new KostkaUnsigned(pocetSten: 6);
 		}
 
 		public void PridejHrace(Hrac hrac)
@@ -55,7 +58,7 @@
 
 					Console.WriteLine($"Hraje hráč {hrac.Jmeno}.");
 
-					HerniPlan.HrajTahHrace(hrac, kostka);
+					HerniPlan.HrajTahHrace(hrac, Kostka);
 
 					if (hrac.MaVsechnyFigurkyVDomecku())
 					{
