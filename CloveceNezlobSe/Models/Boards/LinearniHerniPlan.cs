@@ -26,7 +26,7 @@ public class LinearniHerniPlan : HerniPlan
 		// cílové políčko
 		policka.Add(new Domecek(this));
 	}
-	
+
 	protected LinearniHerniPlan()
 	{
 		// inicializaci necháme na potomkovi
@@ -39,63 +39,74 @@ public class LinearniHerniPlan : HerniPlan
 
 	public override void HrajTahHrace(Hrac hrac, IKostka kostka)
 	{
-		var hozeneCislo = kostka.Hod();
-
-		HerniRozhodnuti? herniRozhodnuti;
-		try
+		bool hracJeNaTahu = true;
+		while (hracJeNaTahu)
 		{
-			herniRozhodnuti = hrac.DejHerniRozhodnuti(hozeneCislo, new HerniInformace()); // TODO HerniInformace
-		}
-		catch
-		{
-			herniRozhodnuti = null;
-		}
+			var hozeneCislo = kostka.Hod();
 
-		if (herniRozhodnuti == null)
+			HerniRozhodnuti? herniRozhodnuti;
+			try
+			{
+				herniRozhodnuti = hrac.DejHerniRozhodnuti(hozeneCislo, new HerniInformace()); // TODO HerniInformace
+			}
+			catch
+			{
+				herniRozhodnuti = null;
+			}
+
+			hracJeNaTahu = OdehrajRozhodnutiHrace(hrac, hozeneCislo, herniRozhodnuti);
+		}
+	}
+
+	/// <summary>
+	/// Realizuje herní rozhodnutí hráče, provede individuální tah.
+	/// </summary>
+	/// <returns><c>true</c>, pokud má hráč hrát znovu, jinak <c>false</c></returns>
+	private bool OdehrajRozhodnutiHrace(Hrac hrac, int hozeneCislo, HerniRozhodnuti? herniRozhodnuti)
+	{
+		if (herniRozhodnuti?.Figurka?.Policko == null)
 		{
 			Console.WriteLine($"Hráč {hrac.Jmeno} nebude táhnout.");
-			return;
+			return false;
 		}
 
-		if (herniRozhodnuti?.Figurka == null)
-		{
-			return;
-		}
-
-		// TODO níže je základní herní algoritmus pro 
-		
 		Policko? stavajiciPolicko = herniRozhodnuti.Figurka.Policko;
-		if (stavajiciPolicko is null)
-		{
-			throw new InvalidOperationException("Figurka není na žádném políčku.");
-		}
+		Policko? cilovePolicko = ZjistiCilovePolicko(herniRozhodnuti.Figurka, hozeneCislo);
 
-		int indexStavajicihoPolicka = policka.IndexOf(stavajiciPolicko);
-		int indexCile = (indexStavajicihoPolicka + hozeneCislo);
-
-		if (indexCile < 0)
+		if (cilovePolicko is null)
 		{
-			// figurka se vrací na začátek
-			indexCile = 0;
+			Console.WriteLine($"Figurka {herniRozhodnuti.Figurka.OznaceniFigurky} vyjela z herní plochy, tah končí.");
+			return false;
 		}
-
-		if (indexCile >= policka.Count)
-		{
-			Console.WriteLine($"Figurka {herniRozhodnuti.Figurka.OznaceniFigurky} vyjela z herní plochy, cíl je potřeba trefit přesně.");
-			return;
-		}
-		Policko cilovePolicko = policka[indexCile];
 
 		// posun figurky na novou pozici
-		stavajiciPolicko.ZvedniFigurku(herniRozhodnuti.Figurka);
-		Console.WriteLine($"Posouvám figurku {herniRozhodnuti.Figurka.OznaceniFigurky} z pozice {indexStavajicihoPolicka} na pozici {indexCile}.");
+		switch (cilovePolicko)
+		{
+			case Zumpa:
+				// žumpa přesune figurku na start
+				Console.WriteLine("Spadnul si do žumpy, přesouvám na start.");
+				var startovniPolicko = policka[0];
+				PosunFigurku(herniRozhodnuti.Figurka, stavajiciPolicko, startovniPolicko);
+				break;
+			default:
+				PosunFigurku(herniRozhodnuti.Figurka, stavajiciPolicko, cilovePolicko);
+				break;
+		}
+
+		return false; //(hozeneCislo == 6); // pokud hodí šestku a odehrál, hraje znovu
+	}
+
+	private void PosunFigurku(Figurka figurka, Policko stavajiciPolicko, Policko cilovePolicko)
+	{
+		stavajiciPolicko.ZvedniFigurku(figurka);
+		Console.WriteLine($"Přesouvám figurku {figurka.OznaceniFigurky} z pozice {policka.IndexOf(stavajiciPolicko)} na pozici {policka.IndexOf(cilovePolicko)}.");
 		if (cilovePolicko.JeObsazeno())
 		{
 			Figurka vyhozenaFigurka = cilovePolicko.ZvedniJedinouFigurku();
 			Console.WriteLine($"Vyhazuji figurku {vyhozenaFigurka.OznaceniFigurky} hráče: {vyhozenaFigurka.Hrac.Jmeno}");
 			policka[0].PolozFigurku(vyhozenaFigurka);
 		}
-		cilovePolicko.PolozFigurku(herniRozhodnuti.Figurka);
+		cilovePolicko.PolozFigurku(figurka);
 	}
 
 	public override Policko? ZjistiCilovePolicko(Figurka figurka, int hod)

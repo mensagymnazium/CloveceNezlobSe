@@ -11,7 +11,7 @@ namespace CloveceNezlobSe.Models
 	{
 		public override void Start()
 		{
-			var tester = new HerniStrategieTester();
+			var tester = new HerniStrategieTester(this.DisableConsoleDuringGame);
 
 			var hraActivator = () =>
 			{

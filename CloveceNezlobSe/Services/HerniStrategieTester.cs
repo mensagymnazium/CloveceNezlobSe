@@ -7,13 +7,23 @@ namespace CloveceNezlobSe.Services;
 
 public class HerniStrategieTester
 {
-    public Dictionary<string, int> Test(int pocetTestu, Func<Hra> hraActivator)
+	private bool disableConsoleDuringGame;
+
+	public HerniStrategieTester(bool disableConsoleDuringGame)
+	{
+		this.disableConsoleDuringGame = disableConsoleDuringGame;
+	}
+
+	public Dictionary<string, int> Test(int pocetTestu, Func<Hra> hraActivator)
     {
         var vysledkyHer = new Dictionary<string, int>(); // Key: hráč, Value: počet vítěztví
-       
-        // vypneme výstup do konzole, abychom urychlili průběh
-        var originalConsoleOut = Console.Out;
-        Console.SetOut(TextWriter.Null);
+
+		// vypneme výstup do konzole, abychom urychlili průběh
+		var originalConsoleOut = Console.Out;
+		if (disableConsoleDuringGame)
+		{
+			Console.SetOut(TextWriter.Null);
+		}
         var sw = Stopwatch.StartNew();
 
         for (int i = 0; i < pocetTestu; i++)
@@ -23,8 +33,11 @@ public class HerniStrategieTester
             vysledkyHer[vitez.Jmeno] = vysledkyHer.GetValueOrDefault(vitez.Jmeno, 0) + 1;
         }
 
-        // obnovení výstupu do konzole
-        Console.SetOut(originalConsoleOut);
+		// obnovení výstupu do konzole
+		if (disableConsoleDuringGame)
+		{
+			Console.SetOut(originalConsoleOut);
+		}
 
         var consoleLogBuilder = new StringBuilder();
         consoleLogBuilder.AppendLine($"Odehráno ({sw.ElapsedMilliseconds:n2} ms)");
@@ -38,8 +51,6 @@ public class HerniStrategieTester
 
         return vysledkyHer;
     }
-    
-
 
     private Hrac HrajPartii(Hra hra)
     {
