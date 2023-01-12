@@ -21,13 +21,13 @@ namespace CloveceNezlobSe.Strategies.JonasH
 				var cilovePolicko = hra.HerniPlan.ZjistiCilovePolicko(figurka, hod);
 				if (cilovePolicko != null)
 				{
-					if (cilovePolicko.JeDomecek)
+					if (cilovePolicko is Domecek)
 					{
 						return new HerniRozhodnuti() { Figurka = figurka };
 
 					}
 
-					else if (!cilovePolicko.JeDomecek && cilovePolicko.ZjistiFigurkyProtihracu(hrac).Any())
+					else if (cilovePolicko is not Domecek && cilovePolicko.ZjistiFigurkyProtihracu(hrac).Any())
 					{
 						if (cilovePolicko.ZjistiFigurkyHrace(hrac) != null)
 						{

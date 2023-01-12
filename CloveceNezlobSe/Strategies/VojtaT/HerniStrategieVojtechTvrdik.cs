@@ -12,7 +12,7 @@ namespace CloveceNezlobSe.Strategies.VojtaT
 		}
 		public override HerniRozhodnuti? DejHerniRozhodnuti(Hrac hrac, int hod, IHerniInformace informace)
 		{
-			var dohratelneFigurky = hrac.Figurky.Where(f => hra.HerniPlan.ZjistiCilovePolicko(f, hod) != null && hra.HerniPlan.ZjistiCilovePolicko(f, hod).JeDomecek);
+			var dohratelneFigurky = hrac.Figurky.Where(f => hra.HerniPlan.ZjistiCilovePolicko(f, hod) != null && (hra.HerniPlan.ZjistiCilovePolicko(f, hod) is Domecek));
 			if (dohratelneFigurky.Count() > 0) return new HerniRozhodnuti() { Figurka = dohratelneFigurky.First() };
 			var agresivniFigurky = hrac.Figurky.Where(f => hra.HerniPlan.ZjistiCilovePolicko(f, hod) != null && hra.HerniPlan.ZjistiCilovePolicko(f, hod).ZjistiFigurkyProtihracu(hrac).Count() > 0);
 			if (agresivniFigurky.Count() > 0) return new HerniRozhodnuti() { Figurka = agresivniFigurky.First() };
@@ -29,7 +29,7 @@ namespace CloveceNezlobSe.Strategies.VojtaT
 			foreach (var figurka in hrac.Figurky)
 			{
 				var cilovePolicko = hra.HerniPlan.ZjistiCilovePolicko(figurka, hod);
-				if (cilovePolicko == null || (cilovePolicko.ZjistiFigurkyHrace(hrac).Count() > 0 && !cilovePolicko.JeDomecek) || (hra.HerniPlan.ZjistiCilovePolicko(figurka, -1) == hra.HerniPlan.ZjistiCilovePolicko(figurka, -0)))
+				if (cilovePolicko == null || (cilovePolicko.ZjistiFigurkyHrace(hrac).Count() > 0 && (cilovePolicko is not Domecek)) || (hra.HerniPlan.ZjistiCilovePolicko(figurka, -1) == hra.HerniPlan.ZjistiCilovePolicko(figurka, -0)))
 				{
 					continue;
 				}
@@ -50,7 +50,7 @@ namespace CloveceNezlobSe.Strategies.VojtaT
 			foreach (var figurka in hrac.Figurky)
 			{
 				var cilovePolicko = hra.HerniPlan.ZjistiCilovePolicko(figurka, hod);
-				if (cilovePolicko != null && (cilovePolicko.ZjistiFigurkyHrace(hrac).Count() == 0 || cilovePolicko.JeDomecek))
+				if (cilovePolicko != null && (cilovePolicko.ZjistiFigurkyHrace(hrac).Count() == 0 || (cilovePolicko is Domecek)))
 				{
 					figurky.Add(figurka, cilovePolicko);
 				}

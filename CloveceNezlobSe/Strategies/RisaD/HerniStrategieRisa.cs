@@ -26,7 +26,7 @@ namespace CloveceNezlobSe.Strategies.RisaD
 				var cilovePolicko = hra.HerniPlan.ZjistiCilovePolicko(figurka, hod);
 				if (cilovePolicko != null)
 				{
-					if (cilovePolicko.JeDomecek)
+					if (cilovePolicko is Domecek)
 					{
 						return new HerniRozhodnuti() { Figurka = figurka };
 					}
@@ -38,7 +38,7 @@ namespace CloveceNezlobSe.Strategies.RisaD
 				var cilovePolicko = hra.HerniPlan.ZjistiCilovePolicko(figurka, hod);
 				if (cilovePolicko != null)
 				{
-					if (!cilovePolicko.JeDomecek && cilovePolicko.ZjistiFigurkyProtihracu(hrac).Any())
+					if ((cilovePolicko is not Domecek) && cilovePolicko.ZjistiFigurkyProtihracu(hrac).Any())
 					{
 						// na cílovém políčku je figurka protihráče, která by se dala vyhodit
 						// proto vyberu příslušnou svoji figurku

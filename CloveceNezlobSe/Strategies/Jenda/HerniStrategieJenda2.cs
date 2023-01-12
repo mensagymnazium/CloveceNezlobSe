@@ -17,8 +17,8 @@ namespace CloveceNezlobSe.Strategies.Jenda
 		{
 			const int vahaDojdi = 10;
 			const int vahaDelDojdi = 4;
-			const int vyhozeniSebe = 50;
-			const int vyhozeniSoupere = 10;
+			//const int vyhozeniSebe = 50;
+			//const int vyhozeniSoupere = 10;
 
 			var figurkyNaCeste = hrac.Figurky.Where(figurka => !figurka.JeVDomecku()).ToList();
 			List<Figurka> figurkyKtereMuzuHrat = figurkyNaCeste.Where(figurka => hra.HerniPlan.MuzuTahnout(figurka, hod)).ToList();

@@ -4,14 +4,16 @@
 	{
 		public HerniPlan HerniPlan { get; private set; }
 
-		private List<Hrac> vitezove = new();
 		public IReadOnlyList<Hrac> Vitezove => vitezove.AsReadOnly();
+		private List<Hrac> vitezove = new();
 
-		List<Hrac> hraci = new();
+		private List<Hrac> hraci = new();
+		private IKostka kostka;
 
 		public Hra(HerniPlan herniPlan)
 		{
 			this.HerniPlan = herniPlan;
+			this.kostka = new KostkaUnsigned(pocetSten: 6);
 		}
 
 		public void PridejHrace(Hrac hrac)
@@ -30,9 +32,6 @@
 
 		public void Start()
 		{
-			//Aby se hra dala spusti vícekrát
-			vitezove.Clear();
-
 			// TODO Kontrola vstupních podmínek pro zahájení hry.
 			foreach (var hrac in hraci)
 			{
@@ -42,9 +41,8 @@
 				}
 			}
 
-			IKostka kostka = new KostkaUnsigned(pocetSten: 6);
-
-			while (true)
+			// Hra končí s prvním vítězným hráčem, úpravou podmínky lze nechat dohrát všechny hráče
+			while (!Vitezove.Any())
 			{
 				foreach (var hrac in hraci)
 				{
@@ -57,20 +55,15 @@
 
 					Console.WriteLine($"Hraje hráč {hrac.Jmeno}.");
 
-					HerniPlan.Hraj(hrac, kostka);
+					HerniPlan.HrajTahHrace(hrac, kostka);
 
 					if (hrac.MaVsechnyFigurkyVDomecku())
 					{
 						vitezove.Add(hrac);
 					}
 				}
-
-				if (Vitezove.Count > 0)
-				{
-					Console.WriteLine("Hra skončila.");
-					break;
-				}
 			}
+			Console.WriteLine("Hra skončila.");
 
 			Console.WriteLine("Výsledky hry:");
 			for (int i = 0; i < Vitezove.Count; i++)
@@ -78,6 +71,5 @@
 				Console.WriteLine($"{i + 1}. {Vitezove[i].Jmeno}");
 			}
 		}
-
 	}
 }

@@ -6,16 +6,13 @@ public class Policko
     protected bool dovolitViceFigurek;
     protected HerniPlan herniPlan;
 
-    [Obsolete("Použij (policko is Domecek)")]
-    public bool JeDomecek => this is Domecek;
-
     public Policko(HerniPlan herniPlan, bool dovolitViceFigurek = false)
     {
         this.dovolitViceFigurek = dovolitViceFigurek;
         this.herniPlan = herniPlan;
     }
 
-    public virtual void PolozFigurku(Figurka figurka, int hod)
+    public virtual void PolozFigurku(Figurka figurka)
     {
         if (JeObsazeno())
         {
@@ -54,7 +51,7 @@ public class Policko
         return figurkyNaPolicku.Where(figurka => figurka.Hrac == hrac);
     }
 
-    public IEnumerable<Figurka> ZjistiFigurkyProtihracu(Hrac hrac)
+    public IEnumerable<Figurka> ZjistiFigurkyProtihracu(Hrac? hrac)
     {
         return figurkyNaPolicku.Where(figurka => figurka.Hrac != hrac);
     }

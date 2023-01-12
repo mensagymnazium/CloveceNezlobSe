@@ -12,7 +12,7 @@
 
 		public abstract bool MuzuTahnout(Figurka figurka, int hod);
 
-		public abstract void Hraj(Hrac hrac, IKostka kostka);
+		public abstract void HrajTahHrace(Hrac hrac, IKostka kostka);
 
 		public abstract void Vykresli();
 	}

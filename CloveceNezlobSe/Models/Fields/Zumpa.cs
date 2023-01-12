@@ -6,10 +6,11 @@ public class Zumpa : Policko
     {
     }
 
-    public override void PolozFigurku(Figurka figurka, int hod)
-    {
-        herniPlan.DejFigurkuNaStartovniPolicko(figurka);
-    }
+	// TODO Je potřeba přesunout logiku do herního plánu.
+	//public override void PolozFigurku(Figurka figurka, int hod)
+ //   {
+ //       herniPlan.DejFigurkuNaStartovniPolicko(figurka);
+ //   }
 
     public override void Vykresli()
     {

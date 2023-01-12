@@ -23,7 +23,7 @@ namespace CloveceNezlobSe.Strategies.ViacheslavN
                 var cilovePolicko = hra.HerniPlan.ZjistiCilovePolicko(figurka, hod);
                 if (cilovePolicko == null)
                     figurkyKtereMuzuHrat.Remove(figurka);
-                else if (cilovePolicko.JeDomecek)
+                else if (cilovePolicko is Domecek)
                     return new HerniRozhodnuti() { Figurka = figurka };
             }
             if (figurkyKtereMuzuHrat.Any())

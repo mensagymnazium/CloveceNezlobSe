@@ -19,7 +19,7 @@ namespace CloveceNezlobSe.Strategies.ViacheslavN
                 var cilovePolicko = hra.HerniPlan.ZjistiCilovePolicko(figurka, hod);
                 if (cilovePolicko != null)
                 {
-                    if (cilovePolicko.JeDomecek)
+                    if (cilovePolicko is Domecek)
                         return new HerniRozhodnuti() { Figurka = figurka };
                     if (cilovePolicko.ZjistiFigurkyProtihracu(hrac).Any())
                         kdoMuzeVyhodit.Add(figurka);
@@ -78,7 +78,7 @@ namespace CloveceNezlobSe.Strategies.ViacheslavN
         {
             for (int i = 0; true; i++)
             {
-                if (hra.HerniPlan.ZjistiCilovePolicko(figurka, i).JeDomecek)
+                if (hra.HerniPlan.ZjistiCilovePolicko(figurka, i) is Domecek)
                     return i;
             }
         }

@@ -29,7 +29,7 @@ public class HerniStrategieHonza : HerniStrategie
 		foreach (var figurka in hrac.Figurky)
 		{
 			var cilovePolicko = Hra.HerniPlan.ZjistiCilovePolicko(figurka, hod);
-			if (cilovePolicko != null && cilovePolicko.JeDomecek) return figurka;
+			if (cilovePolicko != null && cilovePolicko is Domecek) return figurka;
 		}
 
 		return null;
@@ -42,7 +42,7 @@ public class HerniStrategieHonza : HerniStrategie
 			var cilovePolicko = Hra.HerniPlan.ZjistiCilovePolicko(figurka, hod);
 			if (cilovePolicko != null)
 			{
-				if (!cilovePolicko.JeDomecek && cilovePolicko.ZjistiFigurkyProtihracu(hrac).Any())
+				if (cilovePolicko is not Domecek && cilovePolicko.ZjistiFigurkyProtihracu(hrac).Any())
 				{
 					return figurka;
 				}
@@ -115,7 +115,7 @@ public class HerniStrategieHonza : HerniStrategie
 
 		foreach (Figurka figurka in hrac.Figurky)
 		{
-			if (!figurka.Policko.JeObsazeno() && !figurka.Policko.JeDomecek) // Pokud je na startu
+			if (!figurka.Policko.JeObsazeno() && figurka.Policko is not Domecek) // Pokud je na startu
 			{
 				_poziceFigurek[figurka] = 0;
 			}

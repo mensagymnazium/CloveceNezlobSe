@@ -16,7 +16,7 @@ public class HerniStrategieDomecekVyhazujPrvniKlaraF : HerniStrategieTahniPrvniM
 			var cilovePolicko = hra.HerniPlan.ZjistiCilovePolicko(figurka, hod);
 			if (cilovePolicko != null)
 			{
-				if ((!cilovePolicko.JeDomecek && cilovePolicko.ZjistiFigurkyProtihracu(hrac).Any()) || cilovePolicko.JeDomecek)
+				if ((cilovePolicko is not Domecek && cilovePolicko.ZjistiFigurkyProtihracu(hrac).Any()) || cilovePolicko is Domecek)
 				{
 					return new HerniRozhodnuti() { Figurka = figurka };
 				}

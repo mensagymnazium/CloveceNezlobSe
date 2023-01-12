@@ -34,17 +34,17 @@ public class LinearniHerniPlan : HerniPlan
 
 	public override void DejFigurkuNaStartovniPolicko(Figurka figurka)
 	{
-		policka[0].PolozFigurku(figurka, 0);
+		policka[0].PolozFigurku(figurka);
 	}
 
-	public override void Hraj(Hrac hrac, IKostka kostka)
+	public override void HrajTahHrace(Hrac hrac, IKostka kostka)
 	{
-		var hod = kostka.Hod();
+		var hozeneCislo = kostka.Hod();
 
 		HerniRozhodnuti? herniRozhodnuti;
 		try
 		{
-			herniRozhodnuti = hrac.DejHerniRozhodnuti(hod, new HerniInformace()); // TODO HerniInformace
+			herniRozhodnuti = hrac.DejHerniRozhodnuti(hozeneCislo, new HerniInformace()); // TODO HerniInformace
 		}
 		catch
 		{
@@ -57,22 +57,21 @@ public class LinearniHerniPlan : HerniPlan
 			return;
 		}
 
-		if ((herniRozhodnuti is not null) && (herniRozhodnuti.Figurka is not null))
+		if (herniRozhodnuti?.Figurka == null)
 		{
-			PosunFigurku(herniRozhodnuti.Figurka, hod);
+			return;
 		}
-	}
 
-	public virtual void PosunFigurku(Figurka figurka, int pocetPolicek)
-	{
-		Policko? stavajiciPolicko = figurka.Policko;
+		// TODO níže je základní herní algoritmus pro 
+		
+		Policko? stavajiciPolicko = herniRozhodnuti.Figurka.Policko;
 		if (stavajiciPolicko is null)
 		{
 			throw new InvalidOperationException("Figurka není na žádném políčku.");
 		}
 
 		int indexStavajicihoPolicka = policka.IndexOf(stavajiciPolicko);
-		int indexCile = (indexStavajicihoPolicka + pocetPolicek);
+		int indexCile = (indexStavajicihoPolicka + hozeneCislo);
 
 		if (indexCile < 0)
 		{
@@ -82,21 +81,21 @@ public class LinearniHerniPlan : HerniPlan
 
 		if (indexCile >= policka.Count)
 		{
-			Console.WriteLine($"Figurka {figurka.OznaceniFigurky} vyjela z herní plochy, cíl je potřeba trefit přesně.");
+			Console.WriteLine($"Figurka {herniRozhodnuti.Figurka.OznaceniFigurky} vyjela z herní plochy, cíl je potřeba trefit přesně.");
 			return;
 		}
 		Policko cilovePolicko = policka[indexCile];
 
 		// posun figurky na novou pozici
-		stavajiciPolicko.ZvedniFigurku(figurka);
-		Console.WriteLine($"Posouvám figurku {figurka.OznaceniFigurky} z pozice {indexStavajicihoPolicka} na pozici {indexCile}.");
+		stavajiciPolicko.ZvedniFigurku(herniRozhodnuti.Figurka);
+		Console.WriteLine($"Posouvám figurku {herniRozhodnuti.Figurka.OznaceniFigurky} z pozice {indexStavajicihoPolicka} na pozici {indexCile}.");
 		if (cilovePolicko.JeObsazeno())
 		{
 			Figurka vyhozenaFigurka = cilovePolicko.ZvedniJedinouFigurku();
 			Console.WriteLine($"Vyhazuji figurku {vyhozenaFigurka.OznaceniFigurky} hráče: {vyhozenaFigurka.Hrac.Jmeno}");
-			policka[0].PolozFigurku(vyhozenaFigurka, 0);
+			policka[0].PolozFigurku(vyhozenaFigurka);
 		}
-		cilovePolicko.PolozFigurku(figurka, pocetPolicek);
+		cilovePolicko.PolozFigurku(herniRozhodnuti.Figurka);
 	}
 
 	public override Policko? ZjistiCilovePolicko(Figurka figurka, int hod)
