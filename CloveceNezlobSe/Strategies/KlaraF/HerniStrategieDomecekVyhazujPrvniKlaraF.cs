@@ -1,4 +1,5 @@
 ﻿using CloveceNezlobSe.Models;
+using CloveceNezlobSe.Models.Boards;
 
 namespace CloveceNezlobSe.Strategies.KlaraF;
 
@@ -8,7 +9,7 @@ public class HerniStrategieDomecekVyhazujPrvniKlaraF : HerniStrategieTahniPrvniM
 	{
 	}
 
-	public override Figurka? DejFigurkuKterouHrat(Hrac hrac, int hod)
+	public override HerniRozhodnuti? DejHerniRozhodnuti(Hrac hrac, int hod, IHerniInformace informace)
 	{
 		foreach (var figurka in hrac.Figurky)
 		{
@@ -17,15 +18,15 @@ public class HerniStrategieDomecekVyhazujPrvniKlaraF : HerniStrategieTahniPrvniM
 			{
 				if ((!cilovePolicko.JeDomecek && cilovePolicko.ZjistiFigurkyProtihracu(hrac).Any()) || cilovePolicko.JeDomecek)
 				{
-					return figurka;
+					return new HerniRozhodnuti() { Figurka = figurka };
 				}
 				else
 				{
-					return hrac.Figurky.First();
+					return new HerniRozhodnuti() { Figurka = hrac.Figurky.First() };
 				}
 			}
 		}
 
-		return base.DejFigurkuKterouHrat(hrac, hod);
+		return base.DejHerniRozhodnuti(hrac, hod, informace);
 	}
 }

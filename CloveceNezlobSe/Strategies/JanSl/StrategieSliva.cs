@@ -1,4 +1,5 @@
 ﻿using CloveceNezlobSe.Models;
+using CloveceNezlobSe.Models.Boards;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace CloveceNezlobSe.Strategies.JanSl
 
 
 
-		public override Figurka? DejFigurkuKterouHrat(Hrac hrac, int hod)
+		public override HerniRozhodnuti? DejHerniRozhodnuti(Hrac hrac, int hod, IHerniInformace informace)
 		{
 
 			var figurkyNaCeste = hrac.Figurky.Where(figurka => !figurka.JeVDomecku()).Where(fig => dejPorady(fig) < herniPlan.Count - hod)
@@ -46,7 +47,7 @@ namespace CloveceNezlobSe.Strategies.JanSl
 
 			if (figurkyNaCeste.Any())
 			{
-				return figurkyNaCeste.Last();
+				return new HerniRozhodnuti() { Figurka = figurkyNaCeste.Last() };
 			}
 
 			return null;

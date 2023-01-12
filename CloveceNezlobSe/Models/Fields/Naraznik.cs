@@ -18,6 +18,7 @@ public class Naraznik : Policko
         {
             base.PolozFigurku(figurka, hod);
         }
-        herniPlan.PosunFigurku(figurka, posun);
+        // TODO Je potřeba přesunout logiku do HerniPlan
+		// herniPlan.PosunFigurku(figurka, posun);
     }
 }

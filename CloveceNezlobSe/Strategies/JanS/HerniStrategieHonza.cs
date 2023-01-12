@@ -1,4 +1,5 @@
 ﻿using CloveceNezlobSe.Models;
+using CloveceNezlobSe.Models.Boards;
 
 namespace CloveceNezlobSe.Strategies.JanS;
 
@@ -11,7 +12,7 @@ public class HerniStrategieHonza : HerniStrategie
 		Hra = hra;
 	}
 
-	public override Figurka? DejFigurkuKterouHrat(Hrac hrac, int hod)
+	public override HerniRozhodnuti? DejHerniRozhodnuti(Hrac hrac, int hod, IHerniInformace informace)
 	{
 		ZapisFigurkyNeboUpdatniVyhozene(hrac);
 
@@ -20,7 +21,7 @@ public class HerniStrategieHonza : HerniStrategie
 				   TahniNejrychlejsiFigurku(hrac, hod);
 
 		ZaznamenejTah(f, hod);
-		return f;
+		return new HerniRozhodnuti() { Figurka = f };
 	}
 
 	private Figurka? JdiDoDomecku(Hrac hrac, int hod)

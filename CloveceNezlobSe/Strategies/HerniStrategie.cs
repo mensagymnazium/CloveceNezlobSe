@@ -1,9 +1,10 @@
 ﻿using CloveceNezlobSe.Models;
+using CloveceNezlobSe.Models.Boards;
 
 namespace CloveceNezlobSe.Strategies
 {
     public abstract class HerniStrategie
     {
-        public abstract Figurka? DejFigurkuKterouHrat(Hrac hrac, int hod);
+        public abstract HerniRozhodnuti? DejHerniRozhodnuti(Hrac hrac, int hod, IHerniInformace informace);
     }
 }

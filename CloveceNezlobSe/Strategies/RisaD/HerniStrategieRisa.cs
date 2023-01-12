@@ -1,4 +1,5 @@
 ﻿using CloveceNezlobSe.Models;
+using CloveceNezlobSe.Models.Boards;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace CloveceNezlobSe.Strategies.RisaD
 			this.hra = hra;
 		}
 
-		public override Figurka? DejFigurkuKterouHrat(Hrac hrac, int hod)
+		public override HerniRozhodnuti? DejHerniRozhodnuti(Hrac hrac, int hod, IHerniInformace informace)
 		{
 			foreach (var figurka in hrac.Figurky)
 			{
@@ -27,7 +28,7 @@ namespace CloveceNezlobSe.Strategies.RisaD
 				{
 					if (cilovePolicko.JeDomecek)
 					{
-						return figurka;
+						return new HerniRozhodnuti() { Figurka = figurka };
 					}
 				}
 			}
@@ -41,7 +42,7 @@ namespace CloveceNezlobSe.Strategies.RisaD
 					{
 						// na cílovém políčku je figurka protihráče, která by se dala vyhodit
 						// proto vyberu příslušnou svoji figurku
-						return figurka;
+						return new HerniRozhodnuti() { Figurka = figurka };
 					}
 				}
 			}
@@ -66,7 +67,7 @@ namespace CloveceNezlobSe.Strategies.RisaD
 							{
 								if (hra.HerniPlan.Policka[i] == f.Policko)
 								{
-									return f;
+									return new HerniRozhodnuti() { Figurka = f };
 								}
 							}
 						}
@@ -84,7 +85,7 @@ namespace CloveceNezlobSe.Strategies.RisaD
 					{
 						if (hra.HerniPlan.Policka[i] == f.Policko)
 						{
-							return f;
+							return new HerniRozhodnuti() { Figurka = f };
 						}
 					}
 

@@ -1,4 +1,5 @@
 using CloveceNezlobSe.Models;
+using CloveceNezlobSe.Models.Boards;
 
 namespace CloveceNezlobSe.Strategies.DiceMaster;
 
@@ -13,9 +14,9 @@ public class HerniStrategieDiceMaster : HerniStrategie
         _strategy = new Strategy();
     }
 
-    public override Figurka? DejFigurkuKterouHrat(Hrac hrac, int hod)
-    {
-        if (hrac.Figurky.Count <= 0)
+	public override HerniRozhodnuti? DejHerniRozhodnuti(Hrac hrac, int hod, IHerniInformace informace)
+	{
+		if (hrac.Figurky.Count <= 0)
         {
             return null;
         }
@@ -64,7 +65,7 @@ public class HerniStrategieDiceMaster : HerniStrategie
         }
         else
         {
-            return hrac.Figurky[targetId.Value];
+            return new HerniRozhodnuti() { Figurka = hrac.Figurky[targetId.Value] };
         }
     }
 }

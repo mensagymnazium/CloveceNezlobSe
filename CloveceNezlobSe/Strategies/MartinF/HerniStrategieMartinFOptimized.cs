@@ -1,6 +1,7 @@
 ﻿// ReSharper disable CommentTypo
 
 using CloveceNezlobSe.Models;
+using CloveceNezlobSe.Models.Boards;
 using System.CodeDom.Compiler;
 using System.Diagnostics;
 using System.Text;
@@ -11,9 +12,9 @@ public class HerniStrategieMartinFOptimized : HerniStrategie
 	private readonly Hra hra;
 	private HerniStrategieMartinFVahy vahy;
 
-	public override Figurka? DejFigurkuKterouHrat(Hrac hrac, int hod)
-    {
-        var antiBenRand = new Random();
+	public override HerniRozhodnuti? DejHerniRozhodnuti(Hrac hrac, int hod, IHerniInformace informace)
+	{
+		var antiBenRand = new Random();
 
         //Inicializace slovníku key: figurka, value: váha = 1
 		var vahyVyberu = new Dictionary<Figurka, double>();
@@ -102,8 +103,8 @@ public class HerniStrategieMartinFOptimized : HerniStrategie
         //Vyber figurku s nejvetsi vahou
         var nejlepsiFigurkaPair = vahyVyberu.MaxBy(x => x.Value);
 
-        //Radši nehnu, než si dělat paseku
-        return nejlepsiFigurkaPair.Value == 0 ? null : nejlepsiFigurkaPair.Key;
+		//Radši nehnu, než si dělat paseku
+		return new HerniRozhodnuti() { Figurka = nejlepsiFigurkaPair.Value == 0 ? null : nejlepsiFigurkaPair.Key };
     }
 
     private static Thread? AntiPredpovedNahodnostiVlakno;

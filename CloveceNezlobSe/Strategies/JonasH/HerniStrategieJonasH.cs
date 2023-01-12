@@ -1,4 +1,5 @@
 ﻿using CloveceNezlobSe.Models;
+using CloveceNezlobSe.Models.Boards;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace CloveceNezlobSe.Strategies.JonasH
 		{
 		}
 
-		public override Figurka? DejFigurkuKterouHrat(Hrac hrac, int hod)
+		public override HerniRozhodnuti? DejHerniRozhodnuti(Hrac hrac, int hod, IHerniInformace informace)
 		{
 			foreach (var figurka in hrac.Figurky)
 			{
@@ -22,7 +23,7 @@ namespace CloveceNezlobSe.Strategies.JonasH
 				{
 					if (cilovePolicko.JeDomecek)
 					{
-						return figurka;
+						return new HerniRozhodnuti() { Figurka = figurka };
 
 					}
 
@@ -30,20 +31,20 @@ namespace CloveceNezlobSe.Strategies.JonasH
 					{
 						if (cilovePolicko.ZjistiFigurkyHrace(hrac) != null)
 						{
-							return figurka;
+							return new HerniRozhodnuti() { Figurka = figurka };
 						}
 						else
 						{
 							var figurkyNaCeste = hrac.Figurky.Where(figurka => !figurka.JeVDomecku()).ToList();
 							var figurkyKtereMuzuHrat = figurkyNaCeste.Where(figurka => hra.HerniPlan.MuzuTahnout(figurka, hod));
-							return figurkyKtereMuzuHrat.First();
+							return new HerniRozhodnuti() { Figurka = figurkyKtereMuzuHrat.First() };
 						}
 
 					}
 				}//Udělat aby se stejné figurky nemohly navzájem vyhodit
 			}
 
-			return base.DejFigurkuKterouHrat(hrac, hod);
+			return base.DejHerniRozhodnuti(hrac, hod, informace);
 		}
 	}
 }

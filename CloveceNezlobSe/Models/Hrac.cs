@@ -1,14 +1,15 @@
-﻿using CloveceNezlobSe.Strategies;
+﻿using CloveceNezlobSe.Models.Boards;
+using CloveceNezlobSe.Strategies;
 
 namespace CloveceNezlobSe.Models
 {
-    public class Hrac
+	public class Hrac
 	{
 		public string Jmeno { get; private set; }
 
 		private List<Figurka> figurky = new();
 		public IReadOnlyList<Figurka> Figurky => figurky.AsReadOnly();
-		
+
 
 		private HerniStrategie herniStrategie;
 
@@ -19,7 +20,7 @@ namespace CloveceNezlobSe.Models
 
 			for (int i = 0; i < 4; i++)
 			{
-				figurky.Add(new Figurka(this, $"{this.Jmeno.Substring(0,1)}{(i + 1)}"));
+				figurky.Add(new Figurka(this, $"{this.Jmeno.Substring(0, 1)}{(i + 1)}"));
 			}
 		}
 
@@ -28,9 +29,9 @@ namespace CloveceNezlobSe.Models
 			return figurky.All(figurka => figurka.JeVDomecku());
 		}
 
-		public Figurka? DejFigurkuKterouHrat(int hod)
+		public HerniRozhodnuti? DejHerniRozhodnuti(int hod, IHerniInformace informace)
 		{
-			return herniStrategie.DejFigurkuKterouHrat(this, hod);
+			return herniStrategie.DejHerniRozhodnuti(this, hod, informace);
 		}
 	}
 }

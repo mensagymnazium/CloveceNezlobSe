@@ -1,4 +1,5 @@
 using CloveceNezlobSe.Models;
+using CloveceNezlobSe.Models.Boards;
 using System;
 using System.Linq;
 
@@ -13,9 +14,9 @@ namespace CloveceNezlobSe.Strategies.ViacheslavN
             this.hra = hra;
         }
 
-        public override Figurka? DejFigurkuKterouHrat(Hrac hrac, int hod)
-        {
-            var figurkyNaCeste = hrac.Figurky.Where(figurka => !figurka.JeVDomecku()).ToList();
+		public override HerniRozhodnuti? DejHerniRozhodnuti(Hrac hrac, int hod, IHerniInformace informace)
+		{
+			var figurkyNaCeste = hrac.Figurky.Where(figurka => !figurka.JeVDomecku()).ToList();
             var figurkyKtereMuzuHrat = figurkyNaCeste.Where(figurka => hra.HerniPlan.MuzuTahnout(figurka, hod)).ToList();
             foreach (Figurka figurka in figurkyKtereMuzuHrat)
             {
@@ -23,11 +24,11 @@ namespace CloveceNezlobSe.Strategies.ViacheslavN
                 if (cilovePolicko == null)
                     figurkyKtereMuzuHrat.Remove(figurka);
                 else if (cilovePolicko.JeDomecek)
-                    return figurka;
+                    return new HerniRozhodnuti() { Figurka = figurka };
             }
             if (figurkyKtereMuzuHrat.Any())
             {
-                return figurkyKtereMuzuHrat[Random.Shared.Next(0, figurkyKtereMuzuHrat.Count - 1)];
+                return new HerniRozhodnuti() { Figurka = figurkyKtereMuzuHrat[Random.Shared.Next(0, figurkyKtereMuzuHrat.Count - 1)] };
             }
 
             return null;

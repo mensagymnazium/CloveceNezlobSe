@@ -6,8 +6,8 @@ Console.OutputEncoding = Encoding.UTF8;
 
 var turnaj = new TurnajDvouher()
 {
-    VelikostHernihoPlanu = 40,
-    PocetHer = 1000
+    VelikostHernihoPlanu = 30,
+    PocetHer = 100
 };
 
 turnaj.PridejStrategii(new("HerniStrategieTahniPrvniMoznouFigurkou", hra => new HerniStrategieTahniPrvniMoznouFigurkou(hra)));

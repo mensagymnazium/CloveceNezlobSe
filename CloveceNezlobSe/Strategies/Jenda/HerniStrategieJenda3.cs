@@ -1,4 +1,5 @@
 ﻿using CloveceNezlobSe.Models;
+using CloveceNezlobSe.Models.Boards;
 
 namespace CloveceNezlobSe.Strategies.Jenda
 {
@@ -13,7 +14,7 @@ namespace CloveceNezlobSe.Strategies.Jenda
 		{
 			this.hra = hra;
 		}
-		public override Figurka? DejFigurkuKterouHrat(Hrac hrac, int hod)
+		public override HerniRozhodnuti? DejHerniRozhodnuti(Hrac hrac, int hod, IHerniInformace informace)
 		{
 			const int vahaDojdi = 10;
 			const int vahaDelDojdi = 4;
@@ -36,7 +37,7 @@ namespace CloveceNezlobSe.Strategies.Jenda
 			}
 
 			if (hodnoty.Count == 0)
-				return figurkyKtereMuzuHrat.FirstOrDefault();
+				return new HerniRozhodnuti() { Figurka = figurkyKtereMuzuHrat.FirstOrDefault() }	;
 
 			for (int i = 0; i < hodnoty.Count; i++)
 			{
@@ -73,7 +74,7 @@ namespace CloveceNezlobSe.Strategies.Jenda
 				}
 			}
 
-			return vyhod;
+			return new HerniRozhodnuti() { Figurka = vyhod };
 
 
 		}

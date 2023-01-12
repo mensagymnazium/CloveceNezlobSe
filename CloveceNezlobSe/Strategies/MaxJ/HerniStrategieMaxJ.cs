@@ -1,4 +1,5 @@
 ﻿using CloveceNezlobSe.Models;
+using CloveceNezlobSe.Models.Boards;
 
 namespace CloveceNezlobSe.Strategies.MaxJ;
 
@@ -14,7 +15,7 @@ public class HerniStrategieMaxJAdvanced : HerniStrategie
 
 
 
-	public override Figurka? DejFigurkuKterouHrat(Hrac hrac, int hod)
+	public override HerniRozhodnuti? DejHerniRozhodnuti(Hrac hrac, int hod, IHerniInformace informace)
 	{
 		List<Figurka> hratelneFigurky = hrac.Figurky.Where(a => a.Policko is Domecek == false && hra.HerniPlan.MuzuTahnout(a, hod)).ToList();
 		int[] vaha = new int[hratelneFigurky.Count];
@@ -117,11 +118,11 @@ public class HerniStrategieMaxJAdvanced : HerniStrategie
 
 		if (hratelneFigurky.Count > 0)
 		{
-			return hratelneFigurky[nejlepsi];
+			return new HerniRozhodnuti() { Figurka = hratelneFigurky[nejlepsi] };
 		}
 
 
 
-		return hratelneFigurky.FirstOrDefault();
+		return new HerniRozhodnuti() { Figurka = hratelneFigurky.FirstOrDefault() };
 	}
 }

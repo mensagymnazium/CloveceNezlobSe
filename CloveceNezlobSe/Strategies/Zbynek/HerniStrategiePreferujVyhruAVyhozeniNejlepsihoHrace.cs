@@ -1,4 +1,5 @@
 ﻿using CloveceNezlobSe.Models;
+using CloveceNezlobSe.Models.Boards;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace CloveceNezlobSe.Strategies.Zbynek
 		public HerniStrategiePreferujVyhruAVyhozeniNejlepsihoHrace(Hra hra) : base(hra)
 		{
 		}
-		public override Figurka? DejFigurkuKterouHrat(Hrac hrac, int hod)
+		public override HerniRozhodnuti? DejHerniRozhodnuti(Hrac hrac, int hod, IHerniInformace informace)
 		{
 			int pocetfigurekvdomecku = 0;
 			foreach (var figurka in hrac.Figurky)
@@ -33,7 +34,7 @@ namespace CloveceNezlobSe.Strategies.Zbynek
 				{
 					if (cilovePolicko.JeDomecek)
 					{
-						return figurka;
+						return new HerniRozhodnuti() { Figurka = figurka };
 					}
 				}
 			}
@@ -46,12 +47,12 @@ namespace CloveceNezlobSe.Strategies.Zbynek
 					{
 						// na cílovém políčku je figurka protihráče, která by se dala vyhodit
 						// proto vyberu příslušnou svoji figurku
-						return figurka;
+						return new HerniRozhodnuti() { Figurka = figurka };
 					}
 				}
 			}
 
-			return base.DejFigurkuKterouHrat(hrac, hod);
+			return base.DejHerniRozhodnuti(hrac, hod, informace);
 		}
 	}
 

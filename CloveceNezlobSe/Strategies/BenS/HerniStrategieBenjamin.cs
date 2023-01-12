@@ -1,4 +1,5 @@
 ﻿using CloveceNezlobSe.Models;
+using CloveceNezlobSe.Models.Boards;
 
 namespace CloveceNezlobSe.Strategies.BenS;
 
@@ -68,7 +69,7 @@ public class HerniStrategieBenjaminSwart : HerniStrategie
 		_strategy = new Strategy();
 	}
 
-	public override Figurka? DejFigurkuKterouHrat(Hrac hrac, int hod)
+	public override HerniRozhodnuti? DejHerniRozhodnuti(Hrac hrac, int hod, IHerniInformace informace)
 	{
 		if (hrac.Figurky.Count <= 0)
 		{
@@ -119,7 +120,7 @@ public class HerniStrategieBenjaminSwart : HerniStrategie
 		}
 		else
 		{
-			return hrac.Figurky[targetId.Value];
+			return new HerniRozhodnuti() { Figurka = hrac.Figurky[targetId.Value] };
 		}
 	}
 }

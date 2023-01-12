@@ -1,6 +1,7 @@
 ﻿// ReSharper disable CommentTypo
 
 using CloveceNezlobSe.Models;
+using CloveceNezlobSe.Models.Boards;
 
 namespace CloveceNezlobSe.Strategies.MartinF;
 public class HerniStrategieMartinF : HerniStrategie
@@ -9,7 +10,7 @@ public class HerniStrategieMartinF : HerniStrategie
 	private HerniStrategieMartinFVahy vahy;
 
 
-	public override Figurka? DejFigurkuKterouHrat(Hrac hrac, int hod)
+	public override HerniRozhodnuti? DejHerniRozhodnuti(Hrac hrac, int hod, IHerniInformace informace)
 	{
 		//Inicializace slovníku key: figurka, value: váha = 1
 		var vahyVyberu = new Dictionary<Figurka, double>();
@@ -106,7 +107,7 @@ public class HerniStrategieMartinF : HerniStrategie
 			}
 		}
 		//Vyber figurku s nejvetsi vahou
-		return vahyVyberu.MaxBy(x => x.Value).Key;
+		return new HerniRozhodnuti() { Figurka = vahyVyberu.MaxBy(x => x.Value).Key };
 	}
 	public HerniStrategieMartinF(Hra hra, HerniStrategieMartinFVahy vahy)
 	{

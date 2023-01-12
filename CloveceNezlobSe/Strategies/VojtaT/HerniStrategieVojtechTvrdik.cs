@@ -1,4 +1,5 @@
 ﻿using CloveceNezlobSe.Models;
+using CloveceNezlobSe.Models.Boards;
 
 namespace CloveceNezlobSe.Strategies.VojtaT
 {
@@ -9,18 +10,18 @@ namespace CloveceNezlobSe.Strategies.VojtaT
 		{
 			this.hra = hra;
 		}
-		public override Figurka? DejFigurkuKterouHrat(Hrac hrac, int hod)
+		public override HerniRozhodnuti? DejHerniRozhodnuti(Hrac hrac, int hod, IHerniInformace informace)
 		{
 			var dohratelneFigurky = hrac.Figurky.Where(f => hra.HerniPlan.ZjistiCilovePolicko(f, hod) != null && hra.HerniPlan.ZjistiCilovePolicko(f, hod).JeDomecek);
-			if (dohratelneFigurky.Count() > 0) return dohratelneFigurky.First();
+			if (dohratelneFigurky.Count() > 0) return new HerniRozhodnuti() { Figurka = dohratelneFigurky.First() };
 			var agresivniFigurky = hrac.Figurky.Where(f => hra.HerniPlan.ZjistiCilovePolicko(f, hod) != null && hra.HerniPlan.ZjistiCilovePolicko(f, hod).ZjistiFigurkyProtihracu(hrac).Count() > 0);
-			if (agresivniFigurky.Count() > 0) return agresivniFigurky.First();
+			if (agresivniFigurky.Count() > 0) return new HerniRozhodnuti() { Figurka = agresivniFigurky.First() };
 			var ohrozeneFigurky = DejOhrozeneFigurky(hrac, hod);
 			var hratelneFigurky = DejHratelneFigurky(hrac, hod);
 			var figurky = ohrozeneFigurky.Count > 0 ? ohrozeneFigurky : hratelneFigurky;
 			if (figurky.Count == 0) return null;
-			if (figurky.Count == 1) return figurky.First().Key;
-			return figurky.First().Key;
+			if (figurky.Count == 1) return new HerniRozhodnuti() { Figurka = figurky.First().Key };
+			return new HerniRozhodnuti() { Figurka = figurky.First().Key };
 		}
 		public Dictionary<Figurka, Policko> DejOhrozeneFigurky(Hrac hrac, int hod)
 		{

@@ -3,12 +3,12 @@
 	public class Hra
 	{
 		public HerniPlan HerniPlan { get; private set; }
-		
+
 		private List<Hrac> vitezove = new();
 		public IReadOnlyList<Hrac> Vitezove => vitezove.AsReadOnly();
-		
+
 		List<Hrac> hraci = new();
-		
+
 		public Hra(HerniPlan herniPlan)
 		{
 			this.HerniPlan = herniPlan;
@@ -27,10 +27,10 @@
 		{
 			hraci = hraci.OrderBy(hrac => Guid.NewGuid()).ToList();
 		}
-		
+
 		public void Start()
 		{
-            //Aby se hra dala spusti vícekrát
+			//Aby se hra dala spusti vícekrát
 			vitezove.Clear();
 
 			// TODO Kontrola vstupních podmínek pro zahájení hry.
@@ -42,7 +42,7 @@
 				}
 			}
 
-			IKostka kostka = new KostkaSigned(pocetSten: 6);
+			IKostka kostka = new KostkaUnsigned(pocetSten: 6);
 
 			while (true)
 			{
@@ -57,43 +57,14 @@
 
 					Console.WriteLine($"Hraje hráč {hrac.Jmeno}.");
 
-					var hod = kostka.Hod();
+					HerniPlan.Hraj(hrac, kostka);
 
-					Figurka figurka;
-					try
+					if (hrac.MaVsechnyFigurkyVDomecku())
 					{
-						figurka = hrac.DejFigurkuKterouHrat(hod);
-					}
-					catch
-					{
-						figurka = null;
-					}
-					
-					if (figurka == null)
-					{
-						Console.WriteLine($"Hráč {hrac.Jmeno} nemůže tahnout.");
-						//if (Vitezove.Count == hraci.Count - 1)
-						//{
-						//	Console.WriteLine($"Poslední hráč.");
-						//	vitezove.Add(hrac);
-						//	return;
-						//}
-						continue;
-					}
-
-					HerniPlan.PosunFigurku(figurka, hod);
-
-					if (figurka.Policko is Domecek)
-					{
-						Console.WriteLine($"Figurka {figurka.OznaceniFigurky} hráče {figurka.Hrac.Jmeno} došla do cíle.");
-
-						if (hrac.MaVsechnyFigurkyVDomecku())
-						{
-							vitezove.Add(hrac);
-						}
+						vitezove.Add(hrac);
 					}
 				}
-				
+
 				if (Vitezove.Count > 0)
 				{
 					Console.WriteLine("Hra skončila.");

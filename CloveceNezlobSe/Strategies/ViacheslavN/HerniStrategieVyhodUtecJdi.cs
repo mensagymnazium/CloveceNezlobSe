@@ -1,4 +1,5 @@
 using CloveceNezlobSe.Models;
+using CloveceNezlobSe.Models.Boards;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,25 +10,24 @@ namespace CloveceNezlobSe.Strategies.ViacheslavN
         public HerniStrategieVyhodUtecJdi(Hra hra) : base(hra)
         {
         }
-        
-        public override 
-            Figurka? DejFigurkuKterouHrat(Hrac hrac, int hod)
-        {
-            List<Figurka> kdoMuzeVyhodit = new List<Figurka>();
+
+		public override HerniRozhodnuti? DejHerniRozhodnuti(Hrac hrac, int hod, IHerniInformace informace)
+		{
+			List<Figurka> kdoMuzeVyhodit = new List<Figurka>();
             foreach (var figurka in hrac.Figurky)
             {
                 var cilovePolicko = hra.HerniPlan.ZjistiCilovePolicko(figurka, hod);
                 if (cilovePolicko != null)
                 {
                     if (cilovePolicko.JeDomecek)
-                        return figurka;
+                        return new HerniRozhodnuti() { Figurka = figurka };
                     if (cilovePolicko.ZjistiFigurkyProtihracu(hrac).Any())
                         kdoMuzeVyhodit.Add(figurka);
                 }
             }
 
             if (kdoMuzeVyhodit.Any())
-                return kdoMuzeVyhodit.MinBy(f => JakDaleko(f));
+                return new HerniRozhodnuti() { Figurka = kdoMuzeVyhodit.MinBy(f => JakDaleko(f)) };
 
             List<Figurka> kdoMaUtect = new List<Figurka>();
             foreach (Figurka figurka in hrac.Figurky)
@@ -60,7 +60,7 @@ namespace CloveceNezlobSe.Strategies.ViacheslavN
                     if (hra.HerniPlan.ZjistiCilovePolicko(figurka, hod).JeObsazeno())
                         kdoMaUtect.Remove(figurka);
                     else
-                        return figurka;
+                        return new HerniRozhodnuti() { Figurka = figurka };
                 }
             }
 
@@ -68,7 +68,7 @@ namespace CloveceNezlobSe.Strategies.ViacheslavN
             var figurkyKtereMuzuHrat = figurkyNaCeste.Where(figurka => hra.HerniPlan.MuzuTahnout(figurka, hod));
             if (figurkyKtereMuzuHrat.Any())
             {
-                return figurkyKtereMuzuHrat.MinBy(f => JakDaleko(f));
+                return new HerniRozhodnuti() { Figurka = figurkyKtereMuzuHrat.MinBy(f => JakDaleko(f)) };
             }
 
             return null;

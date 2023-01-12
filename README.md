@@ -29,3 +29,25 @@ Nemusíte implementovat vše. Z výše uvedeného si vyberte, co Vás bude bavit
 
 Myslete i na strategie, úpravy hry společně s optimalizací vaší strategie by vám měly pomoci vyhrát (ve srovnání s se strategiemi, které neznají nové prvky).
 
+# Brainstorming k uspořádání
+* `Policko` je low-level objekt, který umí jen primitivní operace (Zvedni, Polož, Zjisti, Vykresli, ...)
+    * jednotlivé typy políček si hlídají základní vlastnosti integrity (jestli se tam vejde více figurek, atp.)
+    	* ale neřeší speciální herní vlastnosti (např. obracení směru, skoky, atp.)
+* `HerniPlan` dává políčku význam na konkrétním uspořádání
+    * `Teleport`, `Zumpa` nebo `Naraznik` může mít na každém typu 	plánu trochu jiné chování,
+	* není proto špatně, že o sobě nerozhodují sami, ale herní plán je musí znát a interpretuje
+* `Hra` řídí jen nejvyšší úroveň hry
+    * střídání hráčů,
+	* určení vítěze
+	* jinak vše deleguje na `HerniPlan.Tah(hrac, kostka)`  = je na řadě další hráč, dávám mu kostku, kterou má hrát
+* `HerniPlan` řídí celou hru
+    * hodí kostkou
+	* zeptá se hráče na rozhodnutí (viz níže)
+	* zjistí cílové políčko
+	* interpretuje význam cílového políčka
+	* posunuje figurky
+	* vyřeší případné pokračování (házení znovu, ...)
+	* vrátí řízení do `Hra`, kde pokračuje další hráč
+* `Hrac.DejFigurkuKterouHrat()` potřebujeme rozšířit na `Hrac.DejHerniRozhodnuti()`
+    * aby bylo možno vrátit nejenom figurku,
+	* ale i další aspekty rozhodnutí, např. směr, atp. (strategie samozřejmě musí znát pravidla, aby věděla, co má být součástí rozhodnutí)
