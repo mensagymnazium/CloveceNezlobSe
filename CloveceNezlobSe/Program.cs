@@ -7,7 +7,7 @@ Console.OutputEncoding = Encoding.UTF8;
 var turnaj = new TurnajDvouher()
 {
     VelikostHernihoPlanu = 30,
-    PocetHer = 100,
+    PocetHer = 1,
 	DisableConsoleDuringGame = false
 };
 

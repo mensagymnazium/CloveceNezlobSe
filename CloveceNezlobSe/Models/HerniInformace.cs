@@ -19,6 +19,7 @@ public class HerniInformace : IHerniInformace
         this.herniPlan = herniPlan;
         MaximalniPocetHracu = herniPlan.MaximalniPocetHracu;
         Policka = herniPlan.Policka;
+
         Kostka = hra.Kostka;
         Hraci = hra.Hraci;
     }

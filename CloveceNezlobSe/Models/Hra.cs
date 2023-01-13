@@ -15,6 +15,8 @@
 		public Hra(HerniPlan herniPlan)
 		{
 			this.HerniPlan = herniPlan;
+            herniPlan.Hra = this;
+
             this.HerniPlan.Hra = this;
 			this.Kostka = new KostkaUnsigned(pocetSten: 6);
 		}
