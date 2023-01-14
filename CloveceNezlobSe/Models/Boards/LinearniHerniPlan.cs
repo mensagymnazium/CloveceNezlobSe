@@ -85,7 +85,7 @@ public class LinearniHerniPlan : HerniPlan
 		switch (cilovePolicko)
 		{
 			case Naraznik:
-				// nárazník vrátí figurku zpět o poloviční počet políčekhozeneCislo
+				// nárazník vrátí figurku zpět o poloviční počet políček
 				PosunFigurku(herniRozhodnuti.Figurka, stavajiciPolicko, cilovePolicko);
 				int posun = hozeneCislo / 2 * (-1);
 				if (posun == 0)
