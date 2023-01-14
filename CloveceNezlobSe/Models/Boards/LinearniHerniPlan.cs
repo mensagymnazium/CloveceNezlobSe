@@ -84,6 +84,17 @@ public class LinearniHerniPlan : HerniPlan
 		// posun figurky na novou pozici
 		switch (cilovePolicko)
 		{
+			case Naraznik:
+				// nárazník vrátí figurku zpět o poloviční počet políčekhozeneCislo
+				PosunFigurku(herniRozhodnuti.Figurka, stavajiciPolicko, cilovePolicko);
+				int posun = hozeneCislo / 2 * (-1);
+				if (posun == 0)
+				{
+					break;
+				}
+				Console.WriteLine($"Figurka {herniRozhodnuti.Figurka.OznaceniFigurky} se odrazila od nárazníku a je jím posunuta o {posun}");
+				OdehrajRozhodnutiHrace(hrac, posun, herniRozhodnuti);
+				break;
 			case Zumpa:
 				// žumpa přesune figurku na start
 				Console.WriteLine("Spadnul si do žumpy, přesouvám na start.");
