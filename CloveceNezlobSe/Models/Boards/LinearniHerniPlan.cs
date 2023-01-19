@@ -1,4 +1,5 @@
-﻿using CloveceNezlobSe.Models.Boards;
+﻿using System.Diagnostics.Contracts;
+using CloveceNezlobSe.Models.Boards;
 using CloveceNezlobSe.Models.Figurky;
 using CloveceNezlobSe.Services;
 
@@ -42,6 +43,8 @@ public class LinearniHerniPlan : HerniPlan
 
 	public override void HrajTahHrace(Hrac hrac, IKostka kostka)
 	{
+		Contract.Assert(Hra is not null);
+
 		bool hracJeNaTahu = true;
 		while (hracJeNaTahu)
 		{
