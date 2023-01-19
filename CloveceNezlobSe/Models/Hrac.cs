@@ -26,6 +26,10 @@ namespace CloveceNezlobSe.Models
 			figurky.Add(new Tank(this, $"{this.Jmeno.Substring(0, 1)}{(4)}"));
 		}
 
+		public void ZamenFigurku(Figurka stara, Figurka nova) {
+			this.figurky[this.figurky.IndexOf(stara)] = nova;
+		}
+
 		public bool MaVsechnyFigurkyVDomecku()
 		{
 			return figurky.All(figurka => figurka.JeVDomecku());

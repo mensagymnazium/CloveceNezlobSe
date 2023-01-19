@@ -11,9 +11,9 @@ public class InsaneHerniPlan : LinearniHerniPlan
         {
             new StartovniPolicko(this),
 
+            new Upgrade(this),
             new Policko(this),
             new Naraznik(this),
-            new Policko(this),
             new Policko(this),
             new Policko(this),
             new Naraznik(this),
@@ -23,11 +23,11 @@ public class InsaneHerniPlan : LinearniHerniPlan
             new Naraznik(this),
             new Policko(this),
             new Policko(this),
-            new Policko(this),
+            new Upgrade(this),
 
             new Policko(this),
             new Policko(this),
-            new Policko(this),
+            new Upgrade(this),
             new Naraznik(this),
             new Policko(this),
             new Policko(this),
@@ -37,7 +37,7 @@ public class InsaneHerniPlan : LinearniHerniPlan
             new Policko(this),
             new Naraznik(this),
             new Policko(this),
-            new Policko(this),
+            new Upgrade(this),
 
             new Domecek(this)
         };
