@@ -27,7 +27,7 @@ public class Policko
 
     public Figurka ZvedniJedinouFigurku()
     {
-        HashSet<Figurka> viditelneFigurky = figurkyNaPolicku.Where(f => f.detectable).ToHashSet();
+        HashSet<Figurka> viditelneFigurky = figurkyNaPolicku.Where(f => f.Detectable).ToHashSet();
         if (viditelneFigurky.Count != 1)
         {
             throw new InvalidOperationException("Na políčku není jediná figurka.");
@@ -62,7 +62,7 @@ public class Policko
 
     public bool JeObsazeno()
     {
-        HashSet<Figurka> viditelneFigurky = figurkyNaPolicku.Where(f => f.detectable).ToHashSet();
+        HashSet<Figurka> viditelneFigurky = figurkyNaPolicku.Where(f => f.Detectable).ToHashSet();
         return !dovolitViceFigurek && (viditelneFigurky.Count != 0);
     }
 

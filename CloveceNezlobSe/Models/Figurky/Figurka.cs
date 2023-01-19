@@ -12,13 +12,13 @@ namespace CloveceNezlobSe.Models.Figurky
 		public Hrac Hrac { get; protected set; }
 		public Policko? Policko { get; protected set; }
 
-		public bool detectable { get; protected set; }
+		public bool Detectable { get; protected set; }
 
 		public Figurka(Hrac hrac, string oznaceniFigurky)
 		{
 			this.Hrac = hrac;
 			this.OznaceniFigurky = oznaceniFigurky;
-			detectable = true;
+			Detectable = true;
 		}
 
 		public void NastavPolicko(Policko? policko)

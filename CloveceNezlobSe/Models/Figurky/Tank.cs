@@ -11,7 +11,7 @@ namespace CloveceNezlobSe.Models.Figurky
 		public Tank(Hrac hrac, string oznaceniFigurky) : base(hrac, oznaceniFigurky)
 		{
 			this.OznaceniFigurky = oznaceniFigurky + "T";
-			detectable = false;
+			Detectable = false;
 		}
 	}
 }

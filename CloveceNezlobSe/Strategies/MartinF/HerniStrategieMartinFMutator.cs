@@ -2,6 +2,7 @@
 using CloveceNezlobSe.Services;
 using System.Diagnostics;
 using System.Text;
+using CloveceNezlobSe.Strategies.MartinT;
 
 namespace CloveceNezlobSe.Strategies.MartinF;
 
@@ -25,12 +26,20 @@ public class HerniStrategieMartinFMutator
 		Console.SetOut(TextWriter.Null);
 
 		int iterace = 0;
-		var historieMutaci = new Dictionary<HerniStrategieMartinFVahy, double>();
+		var historieMutaci = new Dictionary<HerniStrategieMartinFVahyTurboSmurf, double>();
 
 		//Zaloz zakladni 2 historie mutaci
 		for (int i = 0; i < 2; i++)
-		{
-			var zakladovaMutace = SkombinujVahay(new HerniStrategieMartinFVahy(), new HerniStrategieMartinFVahy());
+        {
+            var zakladoveVahy = new HerniStrategieMartinFVahyTurboSmurf()
+            {
+                VahaVyhozeniProtivnika = 2.168093189399041, VahaJduDoDomecku = 3.576040055451859,
+                VahaRizikoVyhozeni = 0.1252135910797434, VahaPreferujiVzdalenost = 2.7129007748022995,
+                VahaJeZamnouProtihrac = 0.3511830509461851, VahaJduNaNaraznik = 0.4171353045047547,
+                ThresholdPodKteryNehraju = 0.282276113908418
+            };
+
+            var zakladovaMutace = ZmutujVahy(zakladoveVahy);
 			var zakladovyWinRate = ZiskejWinRateVah(zakladovaMutace);
 			historieMutaci.Add(zakladovaMutace, zakladovyWinRate);
 		}
@@ -39,11 +48,10 @@ public class HerniStrategieMartinFMutator
 		int pocetIteraciBezZlepseni = 0;
 		while (true)
 		{
+            var sw = Stopwatch.StartNew();
 
-			var sw = Stopwatch.StartNew();
-
-			//Nastavení vah strategie
-			HerniStrategieMartinFVahy zmutovaneVahy;
+            //Nastavení vah strategie
+            HerniStrategieMartinFVahyTurboSmurf zmutovaneVahy;
 			double winRateMutace;
 
 			lock (historieMutaci)
@@ -72,7 +80,13 @@ public class HerniStrategieMartinFMutator
 			else
 			{
 				pocetIteraciBezZlepseni++;
-				silaMutaceChci = (1 + pocetIteraciBezZlepseni) * NASOBITEL_NEUSPECHU_SILA_MUTACE_CHCI;
+				Console.SetOut(originalConsoleOut);
+
+				Console.SetCursorPosition(0,Console.GetCursorPosition().Top-1);
+                Console.WriteLine($"Hry bez zlepšení - {pocetIteraciBezZlepseni}");
+
+                Console.SetOut(TextWriter.Null);
+                silaMutaceChci = (1 + pocetIteraciBezZlepseni) * NASOBITEL_NEUSPECHU_SILA_MUTACE_CHCI;
 				silaMutaceNechci = (1 + pocetIteraciBezZlepseni) * NASOBITEL_NEUSPECHU_SILA_MUTACE_NECHCI;
 			}
 
@@ -87,7 +101,7 @@ public class HerniStrategieMartinFMutator
 		// ReSharper disable once FunctionNeverReturns
 	}
 
-	private double ZiskejWinRateVah(HerniStrategieMartinFVahy vahy)
+	private double ZiskejWinRateVah(HerniStrategieMartinFVahyTurboSmurf vahy)
 	{
 		var vyhraneHry = 0d;
 		for (int i = 0; i < MNOZSTVI_TESTU; i++)
@@ -99,14 +113,14 @@ public class HerniStrategieMartinFMutator
 
 		return vyhraneHry / MNOZSTVI_TESTU;
 	}
-	private Hrac HrajPartii(HerniStrategieMartinFVahy vahy)
+	private Hrac HrajPartii(HerniStrategieMartinFVahyTurboSmurf vahy)
 	{
-		var herniPlan = new LinearniHerniPlan(pocetPolicek: 40, writer);
+		var herniPlan = new InsaneHerniPlan(writer);
 
 		var hra = new Hra(herniPlan, writer);
 
-		var herniStrategieNaVycvik = new HerniStrategieMartinFOptimized(hra, vahy);
-		var herniStrategieDummy = new HerniStrategieMartinF(hra, new HerniStrategieMartinFVahy());
+		var herniStrategieNaVycvik = new HerniStrategieMartinFTurboSmurf(vahy);
+		var herniStrategieDummy = new HerniStrategieMartinT(hra);
 
 		var hrac1 = new Hrac(JMENO_HRACE, herniStrategieNaVycvik);
 		var hrac2 = new Hrac("Dumík", herniStrategieDummy);
@@ -123,14 +137,14 @@ public class HerniStrategieMartinFMutator
 	/// <summary></summary>
 	/// <param name="historieMutaci">Key: váhy, value: úspěšnost (fitness) v procentech (0.0d - 1.0d)</param>
 	/// <returns></returns>
-	private HerniStrategieMartinFVahy ZmutujStrategii(IDictionary<HerniStrategieMartinFVahy, double> historieMutaci)
+	private HerniStrategieMartinFVahyTurboSmurf ZmutujStrategii(IDictionary<HerniStrategieMartinFVahyTurboSmurf, double> historieMutaci)
 	{
 		//Vyber 2 nejlepsi,
 		//Skombinuj
 		//Vrat
 
-		var nejlepsiGeny = historieMutaci.OrderByDescending(x => x.Value).Take(2).ToArray();
-		return SkombinujVahay(nejlepsiGeny[0].Key, nejlepsiGeny[1].Key);
+		var nejlepsiStrategie = historieMutaci.MaxBy(x => x.Value);
+		return ZmutujVahy(nejlepsiStrategie.Key);
 	}
 
 	private double silaMutaceChci = 0.05d;
@@ -140,15 +154,17 @@ public class HerniStrategieMartinFMutator
 	private const double NASOBITEL_NEUSPECHU_SILA_MUTACE_NECHCI = 0.005d;
 	private readonly IWriter writer;
 
-	private HerniStrategieMartinFVahy SkombinujVahay(HerniStrategieMartinFVahy a, HerniStrategieMartinFVahy b)
+	private HerniStrategieMartinFVahyTurboSmurf ZmutujVahy(HerniStrategieMartinFVahyTurboSmurf a)
 	{
-		var noveVahy = new HerniStrategieMartinFVahy()
+		var noveVahy = new HerniStrategieMartinFVahyTurboSmurf()
 		{
-			VahaPreferujiVzdalenost = (a.VahaPreferujiVzdalenost + b.VahaPreferujiVzdalenost) / 2d + NahodnyOffset(silaMutaceChci),
-			VahaJduDoDomecku = (a.VahaJduDoDomecku + b.VahaJduDoDomecku) / 2d + NahodnyOffset(silaMutaceChci),
-			VahaRizikoJeZamnouProtihrac = (a.VahaRizikoJeZamnouProtihrac + b.VahaRizikoJeZamnouProtihrac) / 2d + NahodnyOffset(silaMutaceChci),
-			VahaVyhozeniProtivnika = (a.VahaVyhozeniProtivnika + b.VahaVyhozeniProtivnika) / 2d + NahodnyOffset(silaMutaceChci),
-			VahaRizikoVyhozeni = (a.VahaRizikoVyhozeni + b.VahaRizikoVyhozeni) / 2d + NahodnyOffset(silaMutaceNechci)
+			VahaPreferujiVzdalenost = a.VahaPreferujiVzdalenost + NahodnyOffset(silaMutaceChci),
+			VahaJduDoDomecku = a.VahaJduDoDomecku + NahodnyOffset(silaMutaceChci),
+			VahaJeZamnouProtihrac = a.VahaJeZamnouProtihrac + NahodnyOffset(silaMutaceChci),
+			VahaVyhozeniProtivnika = a.VahaVyhozeniProtivnika + NahodnyOffset(silaMutaceChci),
+			VahaRizikoVyhozeni = a.VahaRizikoVyhozeni + NahodnyOffset(silaMutaceNechci),
+			VahaJduNaNaraznik = a.VahaJduNaNaraznik + NahodnyOffset(silaMutaceNechci),
+			ThresholdPodKteryNehraju = a.VahaJduNaNaraznik + NahodnyOffset(silaMutaceNechci)
 		};
 
 		return noveVahy;
