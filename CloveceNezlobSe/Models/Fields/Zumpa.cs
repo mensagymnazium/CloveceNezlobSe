@@ -8,9 +8,9 @@ public class Zumpa : Policko
 
     public override void Vykresli()
     {
-        var originalColor = Console.ForegroundColor;
-        Console.ForegroundColor = ConsoleColor.DarkGreen;
-        Console.Write("[]");
-        Console.ForegroundColor = originalColor;
+        //var originalColor = Console.ForegroundColor;
+        //Console.ForegroundColor = ConsoleColor.DarkGreen;
+        Console.Write("[Ž]");
+        //Console.ForegroundColor = originalColor;
     }
 }

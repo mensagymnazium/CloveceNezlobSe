@@ -13,18 +13,18 @@ public class Naraznik : Policko
     }
 	public override void Vykresli()
 	{
-		var originalBackgroundColor = Console.BackgroundColor;
-		Console.BackgroundColor = ConsoleColor.DarkYellow;
-		var originalForegroundColor = Console.ForegroundColor;
-		Console.ForegroundColor = ConsoleColor.Black;
-		//Console.ForegroundColor = ConsoleColor.White;
-		Console.Write("[");
+		//var originalBackgroundColor = Console.BackgroundColor;
+		//Console.BackgroundColor = ConsoleColor.DarkYellow;
+		//var originalForegroundColor = Console.ForegroundColor;
+		//Console.ForegroundColor = ConsoleColor.Black;
+		////Console.ForegroundColor = ConsoleColor.White;
+		Console.Write("|");
 		foreach (var figurka in figurkyNaPolicku)
 		{
 			Console.Write(figurka.OznaceniFigurky);
 		}
-		Console.Write("]");
-		Console.ForegroundColor = originalForegroundColor;
-		Console.BackgroundColor = originalBackgroundColor;
+		Console.Write("|");
+		//Console.ForegroundColor = originalForegroundColor;
+		//Console.BackgroundColor = originalBackgroundColor;
 	}
 }

@@ -67,7 +67,7 @@ public class Policko
 
     public virtual void Vykresli()
     {
-        Console.BackgroundColor = ConsoleColor.Black;
+        //Console.BackgroundColor = ConsoleColor.Black;
         Console.Write("[");
         foreach (var figurka in figurkyNaPolicku)
         {
