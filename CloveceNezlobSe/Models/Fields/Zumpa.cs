@@ -6,11 +6,11 @@ public class Zumpa : Policko
     {
     }
 
-    public override void Vykresli()
+    public override void Vykresli(Services.IWriter writer)
     {
-        //var originalColor = Console.ForegroundColor;
-        //Console.ForegroundColor = ConsoleColor.DarkGreen;
-        Console.Write("[Ž]");
-        //Console.ForegroundColor = originalColor;
-    }
+		var originalColor = writer.GetForegroundColor();
+		writer.SetForegroundColor(ConsoleColor.DarkGreen);
+		writer.Write("[]");
+		writer.SetForegroundColor(originalColor);
+	}
 }

@@ -1,4 +1,5 @@
 ﻿using CloveceNezlobSe.Models.Figurky;
+using CloveceNezlobSe.Services;
 
 namespace CloveceNezlobSe.Models;
 
@@ -65,14 +66,14 @@ public class Policko
         return !dovolitViceFigurek && (viditelneFigurky.Count != 0);
     }
 
-    public virtual void Vykresli()
+    public virtual void Vykresli(IWriter writer)
     {
-        //Console.BackgroundColor = ConsoleColor.Black;
-        Console.Write("[");
+        writer.SetBackgroundColor(ConsoleColor.Black);
+		writer.Write("[");
         foreach (var figurka in figurkyNaPolicku)
         {
-            Console.Write(figurka.OznaceniFigurky);
+			writer.Write(figurka.OznaceniFigurky);
         }
-        Console.Write("]");
+		writer.Write("]");
     }
 }

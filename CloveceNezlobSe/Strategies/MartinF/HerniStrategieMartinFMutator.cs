@@ -1,4 +1,5 @@
 ﻿using CloveceNezlobSe.Models;
+using CloveceNezlobSe.Services;
 using System.Diagnostics;
 using System.Text;
 
@@ -6,6 +7,10 @@ namespace CloveceNezlobSe.Strategies.MartinF;
 
 public class HerniStrategieMartinFMutator
 {
+	public HerniStrategieMartinFMutator(IWriter writer)
+	{
+		this.writer = writer;
+	}
 
 	/// <summary>
 	/// Množství testů odehrané v jedné trénovací várce
@@ -96,9 +101,9 @@ public class HerniStrategieMartinFMutator
 	}
 	private Hrac HrajPartii(HerniStrategieMartinFVahy vahy)
 	{
-		var herniPlan = new LinearniHerniPlan(pocetPolicek: 40);
+		var herniPlan = new LinearniHerniPlan(pocetPolicek: 40, writer);
 
-		var hra = new Hra(herniPlan);
+		var hra = new Hra(herniPlan, writer);
 
 		var herniStrategieNaVycvik = new HerniStrategieMartinFOptimized(hra, vahy);
 		var herniStrategieDummy = new HerniStrategieMartinF(hra, new HerniStrategieMartinFVahy());
@@ -110,7 +115,7 @@ public class HerniStrategieMartinFMutator
 		hra.PridejHrace(hrac2);
 		hra.NastavNahodnePoradiHracu();
 
-		hra.Start();
+		hra.Start(writer);
 
 		return hra.Vitezove[0]; // vrátíme vítěze
 	}
@@ -133,6 +138,7 @@ public class HerniStrategieMartinFMutator
 
 	private const double NASOBITEL_NEUSPECHU_SILA_MUTACE_CHCI = 0.05d;
 	private const double NASOBITEL_NEUSPECHU_SILA_MUTACE_NECHCI = 0.005d;
+	private readonly IWriter writer;
 
 	private HerniStrategieMartinFVahy SkombinujVahay(HerniStrategieMartinFVahy a, HerniStrategieMartinFVahy b)
 	{

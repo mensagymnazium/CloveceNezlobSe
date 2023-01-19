@@ -1,8 +1,11 @@
-﻿namespace CloveceNezlobSe.Models;
+﻿using CloveceNezlobSe.Services;
+
+namespace CloveceNezlobSe.Models;
 
 public class InsaneHerniPlan : LinearniHerniPlan
 {
-    public InsaneHerniPlan()
+    public InsaneHerniPlan(IWriter writer)
+        : base(writer)
     {
         policka = new()
         {

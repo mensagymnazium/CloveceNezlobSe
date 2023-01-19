@@ -1,5 +1,6 @@
 ﻿using CloveceNezlobSe.Models.Boards;
 using CloveceNezlobSe.Models.Figurky;
+using CloveceNezlobSe.Services;
 
 namespace CloveceNezlobSe.Models;
 
@@ -9,11 +10,12 @@ namespace CloveceNezlobSe.Models;
 public class LinearniHerniPlan : HerniPlan
 {
 	protected List<Policko> policka = new();
+
 	public override IReadOnlyList<Policko> Policka => policka.AsReadOnly();
 
 	public override int MaximalniPocetHracu => int.MaxValue;
 
-	public LinearniHerniPlan(int pocetPolicek)
+	public LinearniHerniPlan(int pocetPolicek, IWriter writer) : base(writer)
 	{
 		// startovní políčko
 		policka.Add(new StartovniPolicko(this));
@@ -28,7 +30,7 @@ public class LinearniHerniPlan : HerniPlan
 		policka.Add(new Domecek(this));
 	}
 
-	protected LinearniHerniPlan()
+	protected LinearniHerniPlan(IWriter writer) : base(writer) 
 	{
 		// inicializaci necháme na potomkovi
 	}
@@ -48,7 +50,7 @@ public class LinearniHerniPlan : HerniPlan
 			HerniRozhodnuti? herniRozhodnuti;
 			try
             {
-                var herniInformace = new HerniInformace(this,Hra);
+                var herniInformace = new HerniInformace(this, Hra);
                 herniRozhodnuti = hrac.DejHerniRozhodnuti(hozeneCislo, herniInformace); // TODO HerniInformace
 			}
 			catch
@@ -68,7 +70,7 @@ public class LinearniHerniPlan : HerniPlan
 	{
 		if (herniRozhodnuti?.Figurka?.Policko == null)
 		{
-			Console.WriteLine($"Hráč {hrac.Jmeno} nebude táhnout.");
+			writer.WriteLine($"Hráč {hrac.Jmeno} nebude táhnout.");
 			return false;
 		}
 
@@ -77,7 +79,7 @@ public class LinearniHerniPlan : HerniPlan
 
 		if (cilovePolicko is null)
 		{
-			Console.WriteLine($"Figurka {herniRozhodnuti.Figurka.OznaceniFigurky} vyjela z herní plochy, tah končí.");
+			writer.WriteLine($"Figurka {herniRozhodnuti.Figurka.OznaceniFigurky} vyjela z herní plochy, tah končí.");
 			return false;
 		}
 
@@ -92,12 +94,12 @@ public class LinearniHerniPlan : HerniPlan
 				{
 					break;
 				}
-				Console.WriteLine($"Figurka {herniRozhodnuti.Figurka.OznaceniFigurky} se odrazila od nárazníku a je jím posunuta o {posun}");
+				writer.WriteLine($"Figurka {herniRozhodnuti.Figurka.OznaceniFigurky} se odrazila od nárazníku a je jím posunuta o {posun}");
 				OdehrajRozhodnutiHrace(hrac, posun, herniRozhodnuti);
 				break;
 			case Zumpa:
 				// žumpa přesune figurku na start
-				Console.WriteLine("Spadnul si do žumpy, přesouvám na start.");
+				writer.WriteLine("Spadnul si do žumpy, přesouvám na start.");
 				var startovniPolicko = policka[0];
 				PosunFigurku(herniRozhodnuti.Figurka, stavajiciPolicko, startovniPolicko);
 				break;
@@ -118,7 +120,7 @@ public class LinearniHerniPlan : HerniPlan
 				int indexCile = policka.IndexOf(cilovePolicko);
 
 				stavajiciPolicko.ZvedniFigurku(figurka);
-				Console.WriteLine($"Přesouvám figurku {figurka.OznaceniFigurky} z pozice {policka.IndexOf(stavajiciPolicko)} na pozici {policka.IndexOf(cilovePolicko)}.");
+				writer.WriteLine($"Přesouvám figurku {figurka.OznaceniFigurky} z pozice {policka.IndexOf(stavajiciPolicko)} na pozici {policka.IndexOf(cilovePolicko)}.");
 				Policko prejetePolicko = policka[indexStavajicihoPolicka];
 				
 				for(int i = indexStavajicihoPolicka+1; i < indexCile; i++)
@@ -127,14 +129,14 @@ public class LinearniHerniPlan : HerniPlan
 					if (prejetePolicko.JeObsazeno())
 					{
 						Figurka vyhozenaFigurka = prejetePolicko.ZvedniJedinouFigurku();
-						Console.WriteLine($"Vyhazuji figurku {vyhozenaFigurka.OznaceniFigurky} hráče: {vyhozenaFigurka.Hrac.Jmeno}");
+						writer.WriteLine($"Vyhazuji figurku {vyhozenaFigurka.OznaceniFigurky} hráče: {vyhozenaFigurka.Hrac.Jmeno}");
 						policka[0].PolozFigurku(vyhozenaFigurka);
 					}
 				}
 				if (cilovePolicko.JeObsazeno())
 				{
 					Figurka vyhozenaFigurka = cilovePolicko.ZvedniJedinouFigurku();
-					Console.WriteLine($"Vyhazuji figurku {vyhozenaFigurka.OznaceniFigurky} hráče: {vyhozenaFigurka.Hrac.Jmeno}");
+					writer.WriteLine($"Vyhazuji figurku {vyhozenaFigurka.OznaceniFigurky} hráče: {vyhozenaFigurka.Hrac.Jmeno}");
 					policka[0].PolozFigurku(vyhozenaFigurka);
 				}
 				cilovePolicko.PolozFigurku(figurka);
@@ -144,11 +146,11 @@ public class LinearniHerniPlan : HerniPlan
 
 			default:
 				stavajiciPolicko.ZvedniFigurku(figurka);
-				Console.WriteLine($"Přesouvám figurku {figurka.OznaceniFigurky} z pozice {policka.IndexOf(stavajiciPolicko)} na pozici {policka.IndexOf(cilovePolicko)}.");
+				writer.WriteLine($"Přesouvám figurku {figurka.OznaceniFigurky} z pozice {policka.IndexOf(stavajiciPolicko)} na pozici {policka.IndexOf(cilovePolicko)}.");
 				if (cilovePolicko.JeObsazeno())
 				{
 					Figurka vyhozenaFigurka = cilovePolicko.ZvedniJedinouFigurku();
-					Console.WriteLine($"Vyhazuji figurku {vyhozenaFigurka.OznaceniFigurky} hráče: {vyhozenaFigurka.Hrac.Jmeno}");
+					writer.WriteLine($"Vyhazuji figurku {vyhozenaFigurka.OznaceniFigurky} hráče: {vyhozenaFigurka.Hrac.Jmeno}");
 					policka[0].PolozFigurku(vyhozenaFigurka);
 				}
 				cilovePolicko.PolozFigurku(figurka);
@@ -200,8 +202,8 @@ public class LinearniHerniPlan : HerniPlan
 	{
 		foreach (var policko in policka)
 		{
-			policko.Vykresli();
+			policko.Vykresli(writer);
 		}
-		Console.WriteLine();
+		writer.WriteLine();
 	}
 }

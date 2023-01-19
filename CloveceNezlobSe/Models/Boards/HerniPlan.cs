@@ -1,9 +1,15 @@
 ﻿using CloveceNezlobSe.Models.Figurky;
+using CloveceNezlobSe.Services;
 
 namespace CloveceNezlobSe.Models;
 
 public abstract class HerniPlan
 {
+    protected HerniPlan(IWriter writer)
+    {
+		this.writer = writer;
+	}
+
     public abstract IReadOnlyList<Policko> Policka { get; }
 		
     public abstract int MaximalniPocetHracu { get; }
@@ -19,11 +25,13 @@ public abstract class HerniPlan
     public abstract void Vykresli();
 
     private Hra? hra;
-    /// <summary>
-    /// Hra může přečtena
-    /// Nastavena může být pouze jednou (to při inicializaci herniho planu)
-    /// </summary>
-    public Hra? Hra
+	protected readonly IWriter writer;
+
+	/// <summary>
+	/// Hra může přečtena
+	/// Nastavena může být pouze jednou (to při inicializaci herniho planu)
+	/// </summary>
+	public Hra? Hra
     {
         get => hra;
         set => hra ??= value;

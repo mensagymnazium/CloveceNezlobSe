@@ -11,11 +11,11 @@ namespace CloveceNezlobSe.Models
 	{
 		public override void Start()
 		{
-			var tester = new HerniStrategieTester(this.DisableConsoleDuringGame);
+			var tester = new HerniStrategieTester(this.Writer);
 
 			var hraActivator = () =>
 			{
-				var hra = new Hra(new LinearniHerniPlan(this.VelikostHernihoPlanu));
+				var hra = new Hra(new LinearniHerniPlan(this.VelikostHernihoPlanu, this.Writer), this.Writer);
 
 				foreach (var item in herniStrategie)
 				{

@@ -15,10 +15,11 @@ namespace CloveceNezlobSe.Models
 					var strategie1 = herniStrategie[i];
 					var strategie2 = herniStrategie[j];
 
-					var tester = new HerniStrategieTester(this.DisableConsoleDuringGame);
+					var tester = new HerniStrategieTester(this.Writer);
 					var hraActivator = () =>
 					{
-						var hra = new Hra(new LinearniHerniPlan(this.VelikostHernihoPlanu));
+						//var hra = new Hra(new LinearniHerniPlan(this.VelikostHernihoPlanu));
+						var hra = new Hra(new InsaneHerniPlan(this.Writer), this.Writer);
 						hra.PridejHrace(new Hrac(strategie1.Name, strategie1.Activator(hra)));
 						hra.PridejHrace(new Hrac(strategie2.Name, strategie2.Activator(hra)));
 						return hra;

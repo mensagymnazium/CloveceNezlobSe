@@ -1,4 +1,6 @@
-﻿namespace CloveceNezlobSe.Models
+﻿using CloveceNezlobSe.Services;
+
+namespace CloveceNezlobSe.Models
 {
 	public class Hra
 	{
@@ -11,14 +13,16 @@
         public IReadOnlyList<Hrac> Hraci => hraci.AsReadOnly();
 
 		public IKostka Kostka;
+		private readonly IWriter writer;
 
-		public Hra(HerniPlan herniPlan)
+		public Hra(HerniPlan herniPlan, IWriter writer)
 		{
 			this.HerniPlan = herniPlan;
-            herniPlan.Hra = this;
+			this.writer = writer;
+			herniPlan.Hra = this;
 
             this.HerniPlan.Hra = this;
-			this.Kostka = new KostkaUnsigned(pocetSten: 6);
+			this.Kostka = new KostkaUnsigned(pocetSten: 6, writer);
 		}
 
 		public void PridejHrace(Hrac hrac)
@@ -35,7 +39,7 @@
 			hraci = hraci.OrderBy(hrac => Guid.NewGuid()).ToList();
 		}
 
-		public void Start()
+		public void Start(IWriter writer)
 		{
 			// TODO Kontrola vstupních podmínek pro zahájení hry.
 			foreach (var hrac in hraci)
@@ -58,7 +62,7 @@
 
 					HerniPlan.Vykresli();
 
-					Console.WriteLine($"Hraje hráč {hrac.Jmeno}.");
+					writer.WriteLine($"Hraje hráč {hrac.Jmeno}.");
 
 					HerniPlan.HrajTahHrace(hrac, Kostka);
 
@@ -68,12 +72,12 @@
 					}
 				}
 			}
-			Console.WriteLine("Hra skončila.");
+			writer.WriteLine("Hra skončila.");
 
-			Console.WriteLine("Výsledky hry:");
+			writer.WriteLine("Výsledky hry:");
 			for (int i = 0; i < Vitezove.Count; i++)
 			{
-				Console.WriteLine($"{i + 1}. {Vitezove[i].Jmeno}");
+				writer.WriteLine($"{i + 1}. {Vitezove[i].Jmeno}");
 			}
 		}
 	}

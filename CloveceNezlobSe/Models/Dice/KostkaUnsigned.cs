@@ -1,14 +1,17 @@
 ﻿using System.Security.Cryptography;
+using CloveceNezlobSe.Services;
 
 namespace CloveceNezlobSe.Models
 {
 	public class KostkaUnsigned : IKostka
 	{
 		int pocetSten;
+		private readonly IWriter writer;
 
-		public KostkaUnsigned(int pocetSten)
+		public KostkaUnsigned(int pocetSten, IWriter writer)
 		{
 			this.pocetSten = pocetSten;
+			this.writer = writer;
 		}
 
 		public int Hod()
@@ -16,7 +19,7 @@ namespace CloveceNezlobSe.Models
 			var lower = 1;
 			var upper = pocetSten + 1;
 			var x = RandomNumberGenerator.GetInt32(lower, upper);
-			Console.WriteLine($"Kostka hodila {x}.");
+			writer.WriteLine($"Kostka hodila {x}.");
 			return x;
 		}
     }

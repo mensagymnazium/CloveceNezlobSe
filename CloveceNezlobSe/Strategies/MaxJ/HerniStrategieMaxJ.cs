@@ -22,7 +22,7 @@ public class HerniStrategieMaxJAdvanced : HerniStrategie
 		int[] vaha = new int[hratelneFigurky.Count];
 		if (hratelneFigurky.Count == 0)
 		{
-			Console.WriteLine("Ted");
+			//Console.WriteLine("Ted");
 		}
 		int nejlepsi = 0;
 		int nejlepsiHodnota = int.MinValue;

@@ -1,4 +1,5 @@
 ﻿using CloveceNezlobSe.Models;
+using CloveceNezlobSe.Services;
 using CloveceNezlobSe.Strategies;
 using CloveceNezlobSe.Strategies.MartinT;
 using System.Text;
@@ -8,8 +9,8 @@ Console.OutputEncoding = Encoding.UTF8;
 var turnaj = new TurnajDvouher()
 {
     VelikostHernihoPlanu = 30,
-    PocetHer = 100,
-	DisableConsoleDuringGame = true
+    PocetHer = 1000,
+	Writer = new NullWriter() // new ConsoleWriter()
 };
 
 //turnaj.PridejStrategii(new("Prvni moznou", hra => new HerniStrategieTahniPrvniMoznouFigurkou(hra)));

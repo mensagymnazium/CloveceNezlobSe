@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CloveceNezlobSe.Services;
 
 namespace CloveceNezlobSe.Models;
 
@@ -11,20 +12,19 @@ public class Naraznik : Policko
     public Naraznik(HerniPlan herniPlan, bool dovolitViceFigurek = false) : base(herniPlan, dovolitViceFigurek)
     {
     }
-	public override void Vykresli()
+	public override void Vykresli(IWriter writer)
 	{
-		//var originalBackgroundColor = Console.BackgroundColor;
-		//Console.BackgroundColor = ConsoleColor.DarkYellow;
-		//var originalForegroundColor = Console.ForegroundColor;
-		//Console.ForegroundColor = ConsoleColor.Black;
-		////Console.ForegroundColor = ConsoleColor.White;
-		Console.Write("|");
+		ConsoleColor originalBackgroundColor = writer.GetBackgroundColor();
+		writer.SetBackgroundColor(ConsoleColor.DarkYellow);
+		ConsoleColor originalForegroundColor = writer.GetForegroundColor();
+		writer.SetForegroundColor(ConsoleColor.Black);
+		writer.Write("[");
 		foreach (var figurka in figurkyNaPolicku)
 		{
-			Console.Write(figurka.OznaceniFigurky);
+			writer.Write(figurka.OznaceniFigurky);
 		}
-		Console.Write("|");
-		//Console.ForegroundColor = originalForegroundColor;
-		//Console.BackgroundColor = originalBackgroundColor;
+		writer.Write("]");
+		writer.SetForegroundColor(originalForegroundColor);
+		writer.SetBackgroundColor(originalBackgroundColor);
 	}
 }
