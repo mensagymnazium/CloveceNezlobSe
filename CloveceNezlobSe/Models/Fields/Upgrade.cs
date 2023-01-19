@@ -23,7 +23,7 @@ public class Upgrade : Policko
 		writer.Write("[U(");
         foreach (var figurka in figurkyNaPolicku)
         {
-            Console.Write(figurka.OznaceniFigurky);
+			writer.Write(figurka.OznaceniFigurky);
         }
 		writer.Write(")]");
         //Console.ForegroundColor = originalColor;
