@@ -1,4 +1,5 @@
 ﻿using CloveceNezlobSe.Models.Figurky;
+using CloveceNezlobSe.Services;
 
 namespace CloveceNezlobSe.Models;
 
@@ -15,16 +16,16 @@ public class Upgrade : Policko
         figurka.Hrac.ZamenFigurku(figurka, tank);
     }
 
-    public override void Vykresli()
+    public override void Vykresli(IWriter writer)
     {
-        //var originalColor = Console.ForegroundColor;
-        //Console.ForegroundColor = ConsoleColor.Magenta;
-        Console.Write("[U(");
+		//var originalColor = Console.ForegroundColor;
+		//Console.ForegroundColor = ConsoleColor.Magenta;
+		writer.Write("[U(");
         foreach (var figurka in figurkyNaPolicku)
         {
             Console.Write(figurka.OznaceniFigurky);
         }
-        Console.Write(")]");
+		writer.Write(")]");
         //Console.ForegroundColor = originalColor;
     }
 }
