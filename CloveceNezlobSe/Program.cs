@@ -4,8 +4,6 @@ using CloveceNezlobSe.Strategies;
 using CloveceNezlobSe.Strategies.MartinF;
 using CloveceNezlobSe.Strategies.MartinT;
 
-//var mutator = new HerniStrategieMartinFMutator();
-//mutator.TrenujStrategii();
 
 var turnaj = new TurnajDvouher()
 {
