@@ -37,6 +37,8 @@ turnaj.PridejStrategii(new("KlaraF:HerniStrategieDomecekVyhazujPrvniKlaraF", hra
 turnaj.PridejStrategii(new("Zbynek:HerniStrategiePreferujVyhruAVyhozeniNejlepsihoHrace", hra => new CloveceNezlobSe.Strategies.Zbynek.HerniStrategiePreferujVyhruAVyhozeniNejlepsihoHrace(hra)));
 turnaj.PridejStrategii(new("VojtaT:HerniStrategieVojtechTvrdik", hra => new CloveceNezlobSe.Strategies.VojtaT.HerniStrategieVojtechTvrdik(hra)));
 turnaj.PridejStrategii(new("MartinT:HerniStrategieMartinT", hra => new HerniStrategieMartinT(hra)));
+turnaj.PridejStrategii(new("HerniStrategieNehraj", hra => new HerniStrategieNehraj(hra)));
+turnaj.PridejStrategii(new("HerniStrategieTakyNehraj", hra => new HerniStrategieTakyNehraj(hra)));
 
 //turnaj.PridejStrategii(new("Zbynek:HerniStrategiePreferujVyhru", hra => new HerniStrategiePreferujVyhru(hra)));
 //turnaj.PridejStrategii(new("Jenda:MojeStrategieJenda3", hra => new Jenda3(hra)));
