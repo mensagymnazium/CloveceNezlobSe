@@ -5,7 +5,7 @@ namespace CloveceNezlobSe.Models;
 
 public class Policko
 {
-    protected HashSet<Figurka> figurkyNaPolicku = new();
+    public HashSet<Figurka> figurkyNaPolicku = new();
     protected bool dovolitViceFigurek;
     protected HerniPlan herniPlan;
 

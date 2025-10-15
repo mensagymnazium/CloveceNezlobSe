@@ -51,15 +51,15 @@ public class LinearniHerniPlan : HerniPlan
 			var hozeneCislo = kostka.Hod();
 
 			HerniRozhodnuti? herniRozhodnuti;
-			try
-            {
+			//try
+   //         {
                 var herniInformace = new HerniInformace(this, Hra);
                 herniRozhodnuti = hrac.DejHerniRozhodnuti(hozeneCislo, herniInformace); // TODO HerniInformace
-			}
-			catch
-			{
-				herniRozhodnuti = null;
-			}
+			//}
+			//catch
+			//{
+			//	herniRozhodnuti = null;
+			//}
 
 			hracJeNaTahu = OdehrajRozhodnutiHrace(hrac, hozeneCislo, herniRozhodnuti);
 		}

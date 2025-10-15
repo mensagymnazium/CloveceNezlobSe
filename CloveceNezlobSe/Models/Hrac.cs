@@ -19,11 +19,11 @@ namespace CloveceNezlobSe.Models
 			this.Jmeno = jmeno;
 			this.herniStrategie = herniStrategie;
 
-			for (int i = 0; i < 3; i++)
+			for (int i = 0; i < 4; i++)
 			{
 				figurky.Add(new Figurka(this, $"{this.Jmeno.Substring(0, 1)}{(i + 1)}"));
 			}
-			figurky.Add(new Tank(this, $"{this.Jmeno.Substring(0, 1)}{(4)}"));
+			//figurky.Add(new Tank(this, $"{this.Jmeno.Substring(0, 1)}{(4)}"));
 		}
 
 		public void ZamenFigurku(Figurka stara, Figurka nova) {
