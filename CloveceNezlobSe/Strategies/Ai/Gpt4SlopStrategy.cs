@@ -20,7 +20,7 @@ public class Gpt4SlopStrategy()
 		
 		AzureOpenAIClient azureClient = new(
 			new Uri("https://hakenoai.openai.azure.com"),
-			new System.ClientModel.ApiKeyCredential("294b6d3e308f4001b5ee30a0a8520f63"));
+			new System.ClientModel.ApiKeyCredential("...")); // <- key is invalidated now, sry
 
 		this.chatClient = azureClient.GetChatClient("gpt-4o");
 	}
